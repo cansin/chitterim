@@ -17,11 +17,7 @@ public class DirectMessageStrategy extends AbstractStrategy {
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
 		if(twitter.existsFriendship(receiverScreenName,twitter.getScreenName())){
-			//try{
-				twitter.sendDirectMessage(receiverScreenName, messageBody);
-			//} catch(NumberFormatException e) {
-				// Just catching a Twitter4j Bug
-			//}
+			twitter.sendDirectMessage(receiverScreenName, messageBody);
 			replyToMessage(message, "You sent direct message to _*" + receiverScreenName +"*_.");
 		} else {
 			replyToMessage(message, "You cannot send direct message to _*" + receiverScreenName +"*_.");
