@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.http.AccessToken;
+import twitter4j.auth.AccessToken;
 
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
@@ -45,7 +45,7 @@ public class BotInvitationState extends AbstractState {
 	
 			new UserAccount(user.getEmail(), accessToken.getToken(), accessToken.getTokenSecret());
 			new UserStatistic(user.getEmail(),new float[]{0,0,0,0,0,0,0,0,0,0,0});
-			new UserTwitterTimeline(user.getEmail(), (long) 1, 1);
+			new UserTwitterTimeline(user.getEmail(), (long) 1, (long) 1);
 	
 			xmppService.sendInvitation(new JID(user.getEmail()));
 	

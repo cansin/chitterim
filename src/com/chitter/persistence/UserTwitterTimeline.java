@@ -15,10 +15,10 @@ public class UserTwitterTimeline {
 	private Long twitterTimelineSinceId;
 
 	@Persistent
-	private Integer twitterDirectMessageSinceId;
+	private Long twitterDirectMessageSinceId;
 	
 
-	public UserTwitterTimeline(String gtalkId, Long twitterTimelineSinceId, Integer twitterDirectMessageSinceId){
+	public UserTwitterTimeline(String gtalkId, Long twitterTimelineSinceId, Long twitterDirectMessageSinceId){
 		this.gtalkId=gtalkId;
 		this.twitterTimelineSinceId=twitterTimelineSinceId;
 		this.twitterDirectMessageSinceId=twitterDirectMessageSinceId;
@@ -27,7 +27,7 @@ public class UserTwitterTimeline {
 	public UserTwitterTimeline(String gtalkId){
 		this.gtalkId="";
 		this.twitterTimelineSinceId=new Long(0);
-		this.twitterDirectMessageSinceId=new Integer(0);
+		this.twitterDirectMessageSinceId=new Long(0);
 	}
 	
 	public String getGtalkId() {
@@ -47,11 +47,11 @@ public class UserTwitterTimeline {
 	}
 
 	public void setTwitterDirectMessageSinceId(
-			Integer twitterDirectMessageSinceId) {
+			Long twitterDirectMessageSinceId) {
 		this.twitterDirectMessageSinceId = twitterDirectMessageSinceId;
 	}
 
-	public Integer getTwitterDirectMessageSinceId() {
+	public Long getTwitterDirectMessageSinceId() {
 		return twitterDirectMessageSinceId;
 	}
 

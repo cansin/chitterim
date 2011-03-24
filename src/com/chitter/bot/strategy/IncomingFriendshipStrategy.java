@@ -16,10 +16,10 @@ public class IncomingFriendshipStrategy extends AbstractStrategy {
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
 
 		IDs ids = twitter.getIncomingFriendships(-1);
-		int[] idsArr=ids.getIDs();
+		long[] idsArr=ids.getIDs();
 		if(idsArr.length!=0){
 			String msgBody="Your pending follow requests are:\n";
-			for(int id : idsArr){
+			for(long id : idsArr){
 				User user=twitter.showUser(id);
 				msgBody+="_"+user.getName()+"_"+" a.k.a _*"+user.getScreenName()+"*_\n";
 			}

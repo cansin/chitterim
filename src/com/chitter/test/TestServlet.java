@@ -30,14 +30,7 @@ public class TestServlet extends HttpServlet {
 	}
 
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("Hello from Servlet!");
-		/*
-	
-		
-		//new UserAccount("cansinyildiz@gmail.com","37035986-ajgA0HG3lqIT0A9fKV0Y6qTBnQyJ3y4h0Xu73K3RI","bgz4jcjdEJiOHYa6NPGDFYOdlEiK35tmtBuBxxGbD4");
-
-		UserAccount u1 = new UserAccount("cansinyildiz@gmail.com");
-		
+		/*System.out.println("Hello from Servlet!");
 
 		List<UserAccount> userAccs = UserAccount.getUserAccountList();
 		
@@ -45,7 +38,7 @@ public class TestServlet extends HttpServlet {
 		
 		while(it.hasNext()){
 			UserAccount ua=it.next();
-			new UserStatistic(ua.getGtalkId(),new float[]{3,2,6,1,7,2,7,2,9,11,5});
+			new UserStatistic(ua.getGtalkId(),new float[]{0,0,0,0,0,0,0,0,0,0,0});
 		}
 		
 		System.out.println(UserStatistic.getSumAnalytic());

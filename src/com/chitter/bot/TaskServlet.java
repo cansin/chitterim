@@ -51,7 +51,7 @@ public class TaskServlet  extends HttpServlet {
 
 		UserTwitterTimeline userTT = new UserTwitterTimeline(gtalkId);
 		Long ttSinceId = userTT.getTwitterTimelineSinceId();
-		Integer dmSinceId = userTT.getTwitterDirectMessageSinceId();
+		Long dmSinceId = userTT.getTwitterDirectMessageSinceId();
 
 
 		System.out.println("Starting routine task for user "+gtalkId+" ... ttSince "+ttSinceId+ " dmSince "+dmSinceId);
