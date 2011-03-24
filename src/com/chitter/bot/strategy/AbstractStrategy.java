@@ -1,7 +1,6 @@
 package com.chitter.bot.strategy;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import twitter4j.TwitterException;
 
@@ -16,9 +15,6 @@ import com.google.appengine.api.xmpp.XMPPServiceFactory;
 public abstract class AbstractStrategy {
 	protected static final XMPPService xmppService =
 		XMPPServiceFactory.getXMPPService();
-	
-	protected static final Logger log = 
-		Logger.getLogger(AbstractStrategy.class.getName());
 	
 	abstract public void handleMessage(UserAccount userAccount, Message message) throws TwitterException;
 	

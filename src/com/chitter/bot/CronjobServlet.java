@@ -2,7 +2,6 @@ package com.chitter.bot;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,6 @@ public class CronjobServlet extends HttpServlet {
 
 	private static final XMPPService xmppService =
 		XMPPServiceFactory.getXMPPService();
-
-	private static final Logger log = 
-		Logger.getLogger(CronjobServlet.class.getName());
 	
 	private static final Queue queue = 
 		QueueFactory.getDefaultQueue();
@@ -55,7 +51,6 @@ public class CronjobServlet extends HttpServlet {
 			UserAccount userAccount = it.next();
 			Presence presence=xmppService.getPresence(new JID(userAccount.getGtalkId()));
 			if(presence.isAvailable() && userAccount.getIsTimelineActive()) {
-				log.warning("And sending!");
 				queue.add(Builder.withUrl("/task?gtalkId="+userAccount.getGtalkId()+
 										"&accessToken="+userAccount.getTwitterAccessToken()+
 										"&accessTokenSecret="+userAccount.getTwitterAccessTokenSecret())

@@ -19,7 +19,7 @@ public class TweetStrategy extends AbstractStrategy {
 		try {
 			twitter.updateStatus(BitlyAPI.shortenUrls(messageBody));
 		} catch (TwitterException e) {
-			log.warning("Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s message. "+e);
+			System.err.println("Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s message. "+e);
 		}
 		replyToMessage(message, "Your tweet has been sent.");	
 	}
