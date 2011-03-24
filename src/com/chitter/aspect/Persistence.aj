@@ -60,8 +60,6 @@ public aspect Persistence {
     		UserStatistic statistic=(UserStatistic) o;
     		System.out.println("which is a statistic object btw with pk "+statistic.getGtalkId());
     		JDOHelper.makeDirty(statistic, "statistics");
-    	} catch(Exception e){
-    		
     	} finally {
         	pm.makePersistent(o.getClass().cast(o));
     		pm.flush();
