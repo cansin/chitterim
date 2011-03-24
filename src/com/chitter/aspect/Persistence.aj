@@ -54,11 +54,11 @@ public aspect Persistence {
     }
     
     after(Object o) : pushObject(o) && !withinEscapePersistence(){
-		System.err.println("I should persist an instance of "+o.getClass());
+		System.out.println("I should persist an instance of "+o.getClass());
     	PersistenceManager pm = getPM();
     	try{
     		UserStatistic statistic=(UserStatistic) o;
-    		System.err.println("which is a statistic object btw with pk "+statistic.getGtalkId());
+    		System.out.println("which is a statistic object btw with pk "+statistic.getGtalkId());
     		JDOHelper.makeDirty(statistic, "statistics");
     	} catch(Exception e){
     		
@@ -73,7 +73,7 @@ public aspect Persistence {
     	PersistenceManager pm = getPM();
 		try{
 			Object r = pm.getObjectById(thisJoinPoint.getSignature().getDeclaringType(),pk);
-			System.err.println("Yes I did and will return "+r);
+			System.out.println("Yes I did and will return "+r);
 			return r;
 		} catch (Exception e) {
 			System.err.println("No I could not and will return null");
@@ -86,9 +86,9 @@ public aspect Persistence {
 		PersistenceManager pm = getPM();
 		
 		try {
-			System.err.println("I am trying to pull a list of "+getClass()+" from db with ");
+			System.out.println("I am trying to pull a list of "+getClass()+" from db with ");
 			List list = (List) pm.newQuery(thisJoinPoint.getSignature().getDeclaringType()).execute();
-			System.err.println("Yes I did");
+			System.out.println("Yes I did");
 			return list;
 		} catch (Exception e) {
 			System.err.println("No I am returning an empty list");
@@ -99,7 +99,7 @@ public aspect Persistence {
 	after() : pmShouldClose() {
 		PersistenceManager PM = perThreadPM.get();
 		if (PM != null) {
-			System.err.println("PM should definitely close");
+			System.out.println("PM should definitely close");
 			perThreadPM.remove();
 			Transaction tx = PM.currentTransaction();
 			if (tx.isActive()) {
