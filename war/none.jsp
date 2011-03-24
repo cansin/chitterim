@@ -20,7 +20,7 @@
 				
 				out.println("<p class=\"nomargin\">Welcome back, <b>"+user.getEmail()+"</b> <a class=\"tiny\" href=\" "+ gtalkLogoutUrl +"\">logout</a>.</p>");
 				if(reauthorize!=null && reauthorize.equals("reauthorize")){
-					out.println("<p class=\"nomargin\">You should reauthorize Aspect Chitter at <a href=\" "+ twitterAuthenticateUrl +"\">Twitter</a>.</p>");
+					out.println("<p class=\"nomargin\">You should reauthorize Chitter.im at <a href=\" "+ twitterAuthenticateUrl +"\">Twitter</a>.</p>");
 				} else {
 					out.println("<p class=\"nomargin\">Your current twitter account is <b>"+twitterScreenName+"</b> <a class=\"tiny\" href=\" "+ twitterAuthenticateUrl +"\">change</a>.</p>");
 				}

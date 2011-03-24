@@ -1,14 +1,9 @@
 package com.chitter.test;
 
-import java.util.Iterator;
-import java.util.List;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chitter.persistence.UserAccount;
-import com.chitter.persistence.UserStatistic;
 import com.google.appengine.api.xmpp.XMPPService;
 import com.google.appengine.api.xmpp.XMPPServiceFactory;
 

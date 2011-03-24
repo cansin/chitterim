@@ -111,15 +111,15 @@ div.clear {
 
 #explanation {
 	position:absolute;
-	top:80px;
+	top:90px;
 	left:10px;
-	width:300px;
+	width:250px;
 	font-size: 16px;
 }
 #explanation img {
 	vertical-align: text-top;
 }
-#explanation span.aspectChitter {
+#explanation span.chitter {
 	color: #00bfff;
 }
 

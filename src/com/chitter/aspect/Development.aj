@@ -62,7 +62,7 @@ public aspect Development {
 	// Exception Logger when returning from handleMessage
 	after(UserAccount user) throwing(TwitterException e):
 		target(AbstractStrategy) && call(public void handleMessage(UserAccount, Message)) && args(user, ..){
-		System.err.println("Aspect Boss, from User: " + user.getGtalkId() + "exception:" + e.toString());
+		System.err.println("Boss, from User: " + user.getGtalkId() + "exception:" + e.toString());
 	}
 	
 	// Notify logger that the execution is now in aspect.Persistence

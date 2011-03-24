@@ -10,13 +10,13 @@
       href="/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css">
 <link rel="stylesheet" type="text/css" href="/style.css">
-<title>Aspect Chitter</title>
+<title>Chitter.im: a Gtalk bot for Twitter</title>
 </head>
 <body>
 
 <div id="headerLine">
 	<div class="wrapper">
-		<span>Home</span> <a href="http://blog.chitter.im">Blog</a> <a href="analytics">Analytics</a>
+		<span>Home</span> <a href="http://chitterim.blogspot.com">Blog</a> <a href="analytics">Analytics</a>
 	</div>
 </div>
 
@@ -24,14 +24,12 @@
 <div id="header">
 	<div class="wrapper">
 		<div id="logo">
-			<a href="/"><img src="img/logo.png" alt="Aspect Chitter" ></a>
+			<a href="/"><img src="img/logo.png" alt="Chitter.im" ></a>
 		</div>
 		<div id="explanation">
 			<p>
-				<span class="aspectChitter">Aspect Chitter</span> is an aspect-oriented<br/>clone of <a href="http://chitter.im">Chitter.im</a>:
-				a Gtalk bot that<br/>allows you to 
-				communicate<br/>with Twitter very simply.
-				<img src="img/doodle.png" alt="Aspect Chitter" >
+				<span class="chitter">Chitter.im</span> is a Gtalk bot that allows you to communicate with Twitter very simply. 
+				<img src="img/doodle.png" alt="Chitter.im" >
 			</p>
 		</div>
 	</div>

@@ -54,7 +54,7 @@ public class BotInvitationState extends AbstractState {
 					twitter.createFriendship(TwitterAPI.getChitterScreenName());
 				}
 			} catch (TwitterException e) {
-				System.err.println("Boss, I couldn't follow aspectChitter from registered user !\n" + e);
+				System.err.println("Boss, I couldn't follow chitter from registered user !\n" + e);
 			}
 			try {
 				twitter.updateStatus("I started using #"+TwitterAPI.getChitterScreenName()+" ;)");
@@ -78,12 +78,12 @@ public class BotInvitationState extends AbstractState {
 					twitter.createFriendship(newUserScreenName);
 				}
 			} catch (TwitterException e) {
-				System.err.println("Boss, I couldn't follow registered user from aspectChitter !\n" + e);
+				System.err.println("Boss, I couldn't follow registered user from chitter !\n" + e);
 			}
 			try{
 				twitter.updateStatus("hey there @"+newUserScreenName+" !");
 			} catch (TwitterException e) {
-				System.err.println("Boss, I couldn't update aspectChitter's status!\n" + e);
+				System.err.println("Boss, I couldn't update chitter's status!\n" + e);
 			}
 	
 		} catch(Exception e){
