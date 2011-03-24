@@ -43,14 +43,6 @@ public aspect Development {
 		System.out.println("Process started for request " + state.getClass().getName() );
 	}
 	
-	// Exception Logger when in web.state
-	// TODO not sure the way to trace stack is correct
-	before(TwitterException e) : 
-		twitterExceptionLog(e) && this(AbstractState) {
-		StackTraceElement last = e.getStackTrace()[0];
-		System.err.println("Boss, exception when trying to " + last.getMethodName() + ":" + e.toString()) ;
-	}
-	
 	// Exception Logger when in aspect.Persistence
 	// TODO not sure the way to trace stack is correct
 	before(Exception e) : 

@@ -69,8 +69,6 @@
 <div id="footer">
 	<div class="wrapper">
 		<p>
-			<a href="analytics?type=min">Min</a>
-			<a href="analytics?type=max">Max</a>
 			<a href="analytics?type=avg">Avg</a>
 			<a href="analytics?type=sum">Sum</a>
 		</p>

@@ -31,12 +31,12 @@ public aspect Statistics {
 		return getAnalyticFor(AnalyticEnum.MAX);
 	}
 	
-	@SuppressWarnings("all")
 	@EscapePersistence
 	private static UserStatistic getAnalyticFor(AnalyticEnum analyticEnum){
 		System.out.println("Boss, I'm at to get getting UserAnalytic "+analyticEnum);
 		
 		try {
+			@SuppressWarnings("unchecked")
 			List<UserStatistic> analytics = UserStatistic.getUserStatisticList();
 			Iterator<UserStatistic> analyticsIt = analytics.iterator();
 			UserStatistic totalAnalytic = new UserStatistic("");
@@ -53,7 +53,7 @@ public aspect Statistics {
 				UserStatistic analytic = analyticsIt.next();
 				float[] analyticArr = analytic.getStatistics();
 				for(int i=0;i<analyticArr.length;i++){
-					if(analyticEnum.equals(AnalyticEnum.SUM)) {
+					if(analyticEnum.equals(AnalyticEnum.SUM) || analyticEnum.equals(AnalyticEnum.AVG)) {
 						totalAnalytic.setStatistic(i, totalAnalytic.getStatistic(i)+analyticArr[i]);
 					} else if(analyticEnum.equals(AnalyticEnum.MAX)){
 						totalAnalytic.setStatistic(i, totalAnalytic.getStatistic(i)>analyticArr[i]?totalAnalytic.getStatistic(i):analyticArr[i]);
@@ -62,7 +62,7 @@ public aspect Statistics {
 					}
 				}
 			}
-			if(analyticEnum.compareTo(AnalyticEnum.AVG)==0) {
+			if(analyticEnum.equals(AnalyticEnum.AVG)) {
 				for(int i=0;i<totalAnalytic.getStatistics().length;i++){
 					totalAnalytic.setStatistic(i, totalAnalytic.getStatistic(i)/analytics.size());
 				}

@@ -21,17 +21,19 @@ public aspect Persistence {
 	 */
 	pointcut pushObject(Object o): target(o) && (call(* (@PersistenceCapable *).set*(..)) || execution((@PersistenceCapable *).new(*,*,..)));
 	pointcut pullObject(Object pk): args(pk) && call((@PersistenceCapable *).new(*));
-	pointcut pullList(): call(List<*> (@PersistenceCapable *).get*List());
+	pointcut pullList(): call(List (@PersistenceCapable *).get*List());
 	
 	pointcut pmShouldClose() : call(* com.chitter..*Servlet.processRequest(HttpServletRequest,HttpServletResponse) throws *);
 	
 	pointcut withinEscapePersistence(): withincode(@EscapePersistence * *(..));
 	
-	public static List<UserAccount> UserAccount.getUserAccountList(){
+	@SuppressWarnings("all")
+	public static List UserAccount.getUserAccountList(){
 		return new ArrayList<UserAccount>();
 	}
 
-	public static List<UserStatistic> UserStatistic.getUserStatisticList() {
+	@SuppressWarnings("all")
+	public static List UserStatistic.getUserStatisticList() {
 		return new ArrayList<UserStatistic> ();
 	}
 

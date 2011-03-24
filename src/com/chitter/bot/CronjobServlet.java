@@ -45,9 +45,9 @@ public class CronjobServlet extends HttpServlet {
 		}
 	}
 	
-	@SuppressWarnings("all")
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		@SuppressWarnings("unchecked")
 		List<UserAccount> userAccounts = UserAccount.getUserAccountList();
 		Iterator<UserAccount> it = userAccounts.iterator();
 		

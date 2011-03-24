@@ -32,6 +32,7 @@ public class TestServlet extends HttpServlet {
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		/*System.out.println("Hello from Servlet!");
 
+		@SuppressWarnings("unchecked")
 		List<UserAccount> userAccs = UserAccount.getUserAccountList();
 		
 		Iterator<UserAccount> it = userAccs.iterator();
