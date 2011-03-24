@@ -1,0 +1,96 @@
+<%@page import="com.chitter.persistence.UserStatistic" %>
+<%@page import="java.util.Arrays" %>
+<%
+	UserStatistic analytic = (UserStatistic)request.getAttribute("analytic");
+%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="SHORTCUT ICON" href="/favicon.ico">
+<link rel="icon" 
+      type="image/ico" 
+      href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<title>Aspect Chitter</title>
+</head>
+<body>
+
+<div id="headerLine">
+	<div class="wrapper">
+		<a href="/">Home</a> <a href="http://blog.chitter.im">Blog</a> <span>Analytics</span>
+	</div>
+</div>
+
+<div id="container">
+<div id="header">
+	<div class="wrapper">
+		<div id="logo">
+			<a href="/"><img src="img/logo.png" alt="Aspect Chitter" ></a>
+		</div>
+		<div id="explanation">
+			<p>
+				<span class="aspectChitter">Aspect Chitter</span> is an aspect-oriented<br/>clone of <a href="http://chitter.im">Chitter.im</a>:
+				a Gtalk bot that<br/>allows you to 
+				communicate<br/>with Twitter very simply.
+				<img src="img/doodle.png" alt="Aspect Chitter" >
+			</p>
+		</div>
+	</div>
+</div>
+<div id="content">
+	<% if(analytic!=null) { %>
+		<%
+		String vals=new String();
+		String labels=new String();
+		float[] valArr=analytic.getStatistics();
+		float[] valArrSorted=analytic.getStatistics();
+		String[] labelsArr=UserStatistic.statisticsLabels;
+		float valMax=0;
+		for(int i=0;i<valArr.length;i++){
+			if(valArr[i]>valMax) valMax=valArr[i];
+			vals+=valArr[i]+",";
+			labels+="|"+labelsArr[i];
+		}
+		vals=vals.substring(0,vals.length()-1);
+		String imgSrc="http://chart.apis.google.com/chart?cht=bvg&chco=4D89F9&chd=t:"+vals+"&chs=900x250&chxt=x,y&chxl=0:"+labels+"&chds=0,"+valMax+"&chxr=1,0,"+valMax+"&chbh=40,0,40";
+		imgSrc=imgSrc.replace(" ","%20");
+		%>
+		<h1>Analytics result for <%= analytic.getGtalkId() %> </h1>
+		<img src=<%= imgSrc %> alt="chart"/>
+	<% } else { %>
+		<h1> Welcome to analytics. </h1>
+	<% } %>
+	
+</div>
+
+<div id="footer">
+	<div class="wrapper">
+		<p>
+			<a href="analytics?type=min">Min</a>
+			<a href="analytics?type=max">Max</a>
+			<a href="analytics?type=avg">Avg</a>
+			<a href="analytics?type=sum">Sum</a>
+		</p>
+		
+		<form name="user" action="analytics" method="get">
+			<p>Gtalk Id: <input type="text" name="gtalkId" />
+			<input type="submit" value="Submit" />
+			<input type="hidden" name="type" value="user" /></p>
+		</form>
+	</div>
+</div>
+<div id="footerLine">
+	<div class="wrapper">
+		<p>This site built with Eclipse and Google App Engine. 
+		Created and designed by <a href="http://cs.bilkent.edu.tr/~cansin">Cansin Yildiz</a>.</p>
+	</div>
+</div>
+</div>
+
+</body>
+</html>

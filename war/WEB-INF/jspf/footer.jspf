@@ -1,0 +1,45 @@
+
+<div id="footer">
+	<div class="wrapper">
+		<div id="left">
+			<h1>More info</h1>
+			<h2>Motivation</h2>
+			<p>
+				<b>Aspect Chitter</b> is an aspect-oriented clone of <a href="http://chitter.im">Chitter.im</a>: a Gtalk bot that enables easy usage of Twitter. Basically, it allows any Gtalk user to access it's Twitter account from a bot, to whom they can give orders like sending tweets, adding friends etc.		
+			</p>
+			<h2>Development</h2>
+			<p>Both Aspect Chitter bot and it's web interface is hosted at Google App Engine for Java (GAEj).</p> 
+<p>The bot itself uses XMPP service of GAEj to communicate with clients. Since, Twitter's Stream API cannot be handled at GAEj, we're polling timeline changes as well, using Task Queues and Cronjob services of GAEj. We're also using some other popular services like Bit.ly URL shortening APIs as well.</p>
+<p>The web interface is a Java Servlet/JSP module to gather account information. It uses OAuth for Twitter, and Users service of GAEj for Gtalk authentication. The persistence is achieved using Java Data Objects (JDO) Query Language (JDOQL).</p>
+		</div>
+		<div id="right">
+			<h2>About Us</h2>
+			<p>
+				We are <a href="http://www.cs.bilkent.edu.tr/~iskender">Ozlem Basak Iskender</a>, <a href="cs.bilkent.edu.tr/~yakut">Isil Doga Yakut</a>, and <a href="http://cs.bilkent.edu.tr/~cansin">Cansin Yildiz</a>. We pursue MSc in Computer Science
+				at Bilkent University.
+			</p>
+			<h2>Features</h2>
+			<p>
+				Using Aspect Chitter bot; you can follow your timeline, send (re)tweets 
+				and direct messages, (un)follow users, see incoming friendships. 
+			</p>
+			<h3>Feature Request / Bug Report</h3>
+			<p>
+				If you have noticed any bugs or have ideas, Cansin will be more than glad
+				receiving your <a href="mailto:cansinyildiz [at] gmail.com">email</a>.
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+</div>
+<div id="footerLine">
+	<div class="wrapper">
+		<p>This site built with Eclipse and Google App Engine. 
+		Created and designed by <a href="http://cs.bilkent.edu.tr/~cansin">Cansin Yildiz</a>.</p>
+	</div>
+</div>
+
+
+</body>
+</html>

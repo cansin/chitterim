@@ -1,0 +1,193 @@
+html{
+	height: 100%;
+}
+
+body {
+	font-family: Verdana,"News Gothic", Helvetica, Arial, serif;	
+	font-size: 12px;
+	margin: 0px;
+	text-align: center;  /* MSIE 5 doesn't center based on auto left/right margins, 
+                          but 'text-align:center' does center top-level divs: */
+ 	min-width: 600px;      /* Specify a min-width for the body as wide as the 'wrapper'
+                           element itself. This prevents negative (i.e. inaccessible)
+                           left-margins in narrow browser windows when using 
+                           Navigator 6+/Mozilla on Win32: */
+	height: 100%;
+	background: #212121;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%;
+	font-weight:normal;
+	color: #7dbddc;
+}
+
+a {
+	color: #00bfff;	
+	text-decoration: none;
+}
+
+
+#footer a {
+	color: #7dbddc;	
+	text-decoration: none;
+}
+
+#content a:hover {
+	text-decoration: underline;
+}
+#footer a:hover {
+	text-decoration: underline;
+}
+
+#footerLine a {
+	color: #7dbddc;	
+	text-decoration: none;
+}
+#footerLine a:hover {
+	text-decoration: underline;
+}
+h1 {
+	font-size: 18px;
+}
+
+h2 {
+	font-size: 14px;
+}
+
+.tiny {
+	font-size: 10px;
+	vertical-align: text-top;
+}
+
+div.wrapper {
+	text-align: left;    /* Reset alignment to compensate for 'text-align:center': */
+	margin-left: auto;   /* Set left and right margins to auto, thus centering the 
+                          element in the containing (body) tag: */
+  	margin-right: auto;
+  	width: 600px;
+	position: relative;
+}
+
+div.clear {
+ clear:both;
+}
+
+#headerLine {
+	background: #212121;
+	height: 20px;
+	padding: 7px 0px 3px 0px;
+}
+
+#headerLine a {
+	padding-left: 10px;
+	color: #00bfff;	
+	text-decoration: none;
+}
+
+#headerLine a:hover {
+	text-decoration: underline;
+}
+
+#headerLine span {
+	padding-left: 10px;
+	color: #ffffff;
+}
+
+#header {
+	background: #f0f0f0;
+	height: 180px;
+}
+
+#logo {
+	position:absolute;
+	top:15px;
+	right:0px;
+}
+
+#logo img {
+	border-style: none;
+}
+
+#explanation {
+	position:absolute;
+	top:80px;
+	left:10px;
+	width:300px;
+	font-size: 16px;
+}
+#explanation img {
+	vertical-align: text-top;
+}
+#explanation span.aspectChitter {
+	color: #00bfff;
+}
+
+#content {
+	background: #ffffff;
+	padding: 20px 0px;
+	text-align: center;
+}
+
+#content p{
+	text-indent: 10px;
+}
+
+#content p.nomargin{
+	margin: 0px;
+	padding: 3px;
+}
+
+div.step {
+}
+div.step img {
+	float: left;
+	padding-right: 10px;
+	height: 40px;
+}
+div.step p {
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+div.greyedOut p {
+	color: #bbbbbb;
+}
+
+#footer {
+	background: #212121;
+	color: #ffffff;
+}
+
+#footer #left {
+	float:left;
+	width: 370px;
+}
+#footer #right {
+	float: right;
+	width: 190px;	
+}
+
+#container {
+	min-height: 100%;
+	height: 100%; 
+	height: auto !important;
+}
+
+#footerLine {
+	margin: 0px;
+	background: #0e0e0e;
+	color: #ffffff;
+	height: 25px;
+	vertical-align: middle;
+	text-align: center;
+	height: 2em;
+}
+
+#footerLine p{;
+	vertical-align: middle;
+	text-align: center;
+	margin: 0px;
+	padding-top: 4px;
+	font-size: 10px; 
+}

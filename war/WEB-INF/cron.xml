@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/cronjob</url>
+    <description>Fetch Twitter streams of online users every 1 minute</description>
+    <schedule>every 1 minutes</schedule>
+  </cron>
+</cronentries>
