@@ -10,7 +10,7 @@ public class TimelineOnStrategy extends AbstractStrategy {
 	@Override
 	public void handleMessage(UserAccount userAccount, Message message)  throws TwitterException {
 		userAccount.setIsTimelineActive(true);
-		replyToMessage(message,"Yeay, can I talk to you know? :)");
+		replyToMessage(message,"Yeay, can I talk to you now? :)");
 	}
 
 }
