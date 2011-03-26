@@ -21,9 +21,12 @@ public aspect Development {
 	
 	pointcut twitterExceptionLog(TwitterException e) :
 		handler(TwitterException) && args(e);
-	
+
 	pointcut persistenceExceptionLog(Exception e) :
 		handler(Exception) && args(e) && this(Persistence);
+	
+	pointcut statisticsExceptionLog(Exception e) :
+		handler(Exception) && args(e) && this(Statistics);
 	
 	pointcut persistenceProcessLog() :
 		within(Persistence) &&
@@ -42,19 +45,32 @@ public aspect Development {
 	before(AbstractState state) : processRequest() && target(state){
 		System.out.println("Process started for request " + state.getClass().getName() );
 	}
-	
+
 	// Exception Logger when in aspect.Persistence
-	// TODO not sure the way to trace stack is correct
 	before(Exception e) : 
 		persistenceExceptionLog(e){
-		StackTraceElement last = e.getStackTrace()[0];
-		System.err.println("Boss, exception when trying to " + last.getMethodName() + ":" + e.toString()) ;
+		System.err.println("-------------Persistence-Exception-----------------");
+		for(int i=0;i<e.getStackTrace().length;i++)
+			System.err.println(e.getStackTrace()[i].toString());
+		System.err.println("---------------------------------------------------");
+	}
+
+	// Exception Logger when in aspect.Statistics
+	before(Exception e) : 
+		statisticsExceptionLog(e){
+		System.err.println("-------------Statistics-Exception------------------");
+		for(int i=0;i<e.getStackTrace().length;i++)
+			System.err.println(e.getStackTrace()[i].toString());
+		System.err.println("---------------------------------------------------");
 	}
 	
 	// Exception Logger when returning from handleMessage
 	after(UserAccount user) throwing(TwitterException e):
 		target(AbstractStrategy) && call(public void handleMessage(UserAccount, Message)) && args(user, ..){
-		System.err.println("Boss, from User: " + user.getGtalkId() + "exception:" + e.toString());
+		System.err.println("-------------Exp-For-"+user.getGtalkId()+"---------");
+		for(int i=0;i<e.getStackTrace().length;i++)
+			System.err.println(e.getStackTrace()[i].toString());
+		System.err.println("---------------------------------------------------");
 	}
 	
 	// Notify logger that the execution is now in aspect.Persistence
