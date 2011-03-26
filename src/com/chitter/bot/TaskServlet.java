@@ -70,10 +70,16 @@ public class TaskServlet  extends HttpServlet {
 				Status status = timeline.get(i);
 				System.out.println("Yes, we're in");
 				if(!status.getUser().getScreenName().equals(twitter.getScreenName())) {
+					String messageBody = "_*" +status.getUser().getScreenName()+ ":*_ ";
+					if(status.isRetweet()) {
+						messageBody += "_rt_ _"+status.getRetweetedStatus().getUser().getScreenName()+"_: " +status.getRetweetedStatus().getText();
+					} else {
+						messageBody += status.getText();
+					}
 					Message message = new MessageBuilder()
 					.withRecipientJids(new JID(gtalkId))
 					.withMessageType(MessageType.CHAT)
-					.withBody("_*" +status.getUser().getScreenName()+ ":*_ " + status.getText())
+					.withBody(messageBody)
 					.build();
 
 					xmppService.sendMessage(message);
