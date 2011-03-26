@@ -48,7 +48,7 @@ public class LoggedInState extends AbstractState {
 
 			
 		} catch (TwitterException e) {
-			System.err.println("---------------------------------------------------");
+			System.err.println("-----------------Logged-in-State-------------------");
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");

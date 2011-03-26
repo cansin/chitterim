@@ -39,7 +39,7 @@ public class TwitterAuthState extends AbstractState {
 			request.setAttribute("twitterLoginUrl", requestToken.getAuthorizationURL());
 			
 		} catch (TwitterException e) {
-			System.err.println("---------------------------------------------------");
+			System.err.println("---------------Twitter-Auth-State------------------");
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");

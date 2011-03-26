@@ -60,6 +60,8 @@ public aspect Persistence {
     		UserStatistic statistic=(UserStatistic) o;
     		System.out.println("which is a statistic object btw with pk "+statistic.getGtalkId());
     		JDOHelper.makeDirty(statistic, "statistics");
+    	} catch(Exception e) {
+    		System.err.println("THIS COULD BE AN EXPECTED EXCEPTION!");
     	} finally {
         	pm.makePersistent(o.getClass().cast(o));
     		pm.flush();
@@ -71,10 +73,9 @@ public aspect Persistence {
     	PersistenceManager pm = getPM();
 		try{
 			Object r = pm.getObjectById(thisJoinPoint.getSignature().getDeclaringType(),pk);
-			System.out.println("Yes I did and will return "+r);
 			return r;
 		} catch (Exception e) {
-			System.err.println("No I could not and will return null");
+    		System.err.println("THIS COULD BE AN EXPECTED EXCEPTION!");
 			return null;
 		} 
     }

@@ -40,7 +40,7 @@ public class TwitterReauthState extends AbstractState {
 			request.setAttribute("gtalkLogoutUrl", userService.createLogoutURL(request.getRequestURI()));
 			request.setAttribute("twitterAuthenticateUrl", requestToken.getAuthenticationURL()+"&force_login=true");
 		} catch (TwitterException e) {
-			System.err.println("---------------------------------------------------");
+			System.err.println("--------------Twitter-Reauth-State-----------------");
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");

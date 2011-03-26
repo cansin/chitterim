@@ -1,7 +1,15 @@
 package com.chitter.web.state;
 
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,10 +50,14 @@ public class BotInvitationState extends AbstractState {
 			Twitter twitter = TwitterAPI.getInstanceFor(accessToken.getToken(), accessToken.getTokenSecret());
 	
 			User user = (User)session.getAttribute("user");
-	
-			new UserAccount(user.getEmail(), accessToken.getToken(), accessToken.getTokenSecret());
-			new UserStatistic(user.getEmail(),new float[]{0,0,0,0,0,0,0,0,0,0,0});
-			new UserTwitterTimeline(user.getEmail(), (long) 1, (long) 1);
+			
+			try {
+				new UserAccount(user.getEmail(), accessToken.getToken(), accessToken.getTokenSecret());
+				new UserStatistic(user.getEmail(),new float[]{0,0,0,0,0,0,0,0,0,0,0});
+				new UserTwitterTimeline(user.getEmail(), (long) 1, (long) 1);
+			} catch(Exception e) {
+				System.err.println("Boss, THIS IS SERIOUS! I couldn't create persistence objects for the new user !\n" + e);		
+			}
 	
 			xmppService.sendInvitation(new JID(user.getEmail()));
 	
@@ -69,6 +81,24 @@ public class BotInvitationState extends AbstractState {
 				System.err.println("Boss, I couldn't get the screen name of the user !\n" + e);
 			}
 			
+			/** Send an email to cansinyildiz@gmail.com to notify me */
+			Properties props = new Properties();
+	        Session ses = Session.getDefaultInstance(props, null);
+	        String msgBody = "...";
+	        try {
+	            Message msg = new MimeMessage(ses);
+	            msg.setFrom(new InternetAddress("cansinyildiz@gmail.com", "Chitter.im"));
+	            msg.addRecipient(Message.RecipientType.TO,
+	                             new InternetAddress("cansinyildiz@gmail.com", "Cansin Yildiz"));
+	            msg.setSubject("New User w/ Twitter: "+newUserScreenName+" Gmail: "+user.getEmail());
+	            msg.setText(msgBody);
+	            Transport.send(msg);
+	        } catch (AddressException e) {
+	        	System.err.println("Boss, I couldn't send you an email !\n" + e);
+	        } catch (MessagingException e) {
+	        	System.err.println("Boss, I couldn't send you an email !\n" + e);
+	        }
+			
 			twitter.shutdown();
 	
 			twitter = TwitterAPI.getInstanceForChitter();
@@ -89,7 +119,7 @@ public class BotInvitationState extends AbstractState {
 			*/
 	
 		} catch(Exception e){
-			System.err.println("---------------------------------------------------");
+			System.err.println("------------Bot-Invitation-State-------------------");
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");
