@@ -99,7 +99,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         </auth-constraint>
     </security-constraint>
     
-    
     <security-constraint>
 	    <web-resource-collection>
 			<web-resource-name>All JSP Pages</web-resource-name>
