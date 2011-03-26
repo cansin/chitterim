@@ -14,6 +14,7 @@ public class HelpStrategy extends AbstractStrategy {
 				"_*/on*_ to receive timeline updates\n" +
 				"_*/off*_ to _not_ receive timeline updates\n" +
 				"_*/t*_ to send tweets.\n"+
+				"_*/q*_ _*category*_ to send quotes.\n"+
 				"_*/rt*_ _*user*_ to retweet a user's _last_ message.\n" +
 				"_*/d*_ _*user*_ to send direct message.\n" +
 				"_*/f*_ _*user*_ to follow someone.\n" +

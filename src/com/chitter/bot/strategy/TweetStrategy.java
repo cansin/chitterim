@@ -17,15 +17,21 @@ public class TweetStrategy extends AbstractStrategy {
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
 
 		try {
-			twitter.updateStatus(BitlyAPI.shortenUrls(messageBody));
+			messageBody = BitlyAPI.shortenUrls(messageBody);
+			if(messageBody.length()<140) {
+				twitter.updateStatus(messageBody);
+				replyToMessage(message, "Your tweet has been sent.");
+			} else {
+				replyToMessage(message, "Your message has "+(messageBody.length()-140)+" extra characters.");
+			}
 		} catch (TwitterException e) {
 			System.err.println("Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s message. ");
 			System.err.println("-----------TweetStrategy-Exception-----------------");
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");
-		}
-		replyToMessage(message, "Your tweet has been sent.");	
+			replyToMessage(message, "I couldn't send your tweet.");	
+		}	
 	}
 
 }

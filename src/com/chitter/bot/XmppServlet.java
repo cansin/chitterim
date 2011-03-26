@@ -9,6 +9,7 @@ import com.chitter.bot.strategy.DirectMessageStrategy;
 import com.chitter.bot.strategy.FollowStrategy;
 import com.chitter.bot.strategy.HelpStrategy;
 import com.chitter.bot.strategy.IncomingFriendshipStrategy;
+import com.chitter.bot.strategy.QuoteStrategy;
 import com.chitter.bot.strategy.RetweetStrategy;
 import com.chitter.bot.strategy.SubscribeStrategy;
 import com.chitter.bot.strategy.TimelineOffStrategy;
@@ -87,6 +88,11 @@ public class XmppServlet extends HttpServlet {
 					message.getBody().equalsIgnoreCase(".incoming") ||
 					message.getBody().equalsIgnoreCase(".i") ) {
 				strategy=new IncomingFriendshipStrategy();
+			} else if (message.getBody().startsWith("/quote ") ||
+					message.getBody().startsWith("/q ") ||
+					message.getBody().startsWith(".quote ") ||
+					message.getBody().startsWith(".q ") ) {
+				strategy=new QuoteStrategy();
 			} else if (message.getBody().equalsIgnoreCase("/on") ||
 					message.getBody().equalsIgnoreCase(".on") ) {
 				strategy=new TimelineOnStrategy();

@@ -91,6 +91,15 @@ public aspect Statistics {
 		    //Fetch the user's statistic object
 		    UserStatistic userStatistic = new UserStatistic(user.getGtalkId());
 		    
+		    //Check whether the user's statistic object has enough statistic columns. 
+		    //(i.e. a new bot command could be added to the system after the user registered.
+		    // Hence, he will not have a column for that bot command.)
+		    if(userStatistic.getStatistics().length<UserStatistic.statisticsLabels.length) {
+		    	float[] arr=new float[UserStatistic.statisticsLabels.length];
+		    	System.arraycopy(userStatistic.getStatistics(), 0, arr, 0, userStatistic.getStatistics().length);
+		    	userStatistic.setStatistics(arr);
+		    }
+		    
 		    //Increment i-th statistic by 1 (e.g. i=0 for DIRECTMESSAGE)
 		    userStatistic.setStatistic(id, userStatistic.getStatistic(id)+1);
 		} catch (Exception e) {

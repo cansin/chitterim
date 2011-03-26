@@ -57,7 +57,7 @@ public class BotInvitationState extends AbstractState {
 				System.err.println("Boss, I couldn't follow chitter from registered user !\n" + e);
 			}
 			try {
-				twitter.updateStatus("I started using #"+TwitterAPI.getChitterScreenName()+" ;)");
+				twitter.updateStatus("I started using @"+TwitterAPI.getChitterScreenName()+" ;)");
 			} catch (TwitterException e) {
 				System.err.println("Boss, I couldn't update registered user's status !\n" + e);
 			}
@@ -80,11 +80,13 @@ public class BotInvitationState extends AbstractState {
 			} catch (TwitterException e) {
 				System.err.println("Boss, I couldn't follow registered user from chitter !\n" + e);
 			}
+			/*
 			try{
 				twitter.updateStatus("hey there @"+newUserScreenName+" !");
 			} catch (TwitterException e) {
 				System.err.println("Boss, I couldn't update chitter's status!\n" + e);
 			}
+			*/
 	
 		} catch(Exception e){
 			System.err.println("---------------------------------------------------");

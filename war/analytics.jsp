@@ -55,7 +55,9 @@
 			labels+="|"+labelsArr[i];
 		}
 		vals=vals.substring(0,vals.length()-1);
-		String imgSrc="http://chart.apis.google.com/chart?cht=bvg&chco=4D89F9&chd=t:"+vals+"&chs=900x250&chxt=x,y&chxl=0:"+labels+"&chds=0,"+valMax+"&chxr=1,0,"+valMax+"&chbh=40,0,40";
+		int chartWidth = 1000;
+		int barWidth = (int)(chartWidth/labelsArr.length)/2;
+		String imgSrc="http://chart.apis.google.com/chart?cht=bvg&chco=4D89F9&chd=t:"+vals+"&chs="+chartWidth+"x250&chxt=x,y&chxl=0:"+labels+"&chds=0,"+valMax+"&chxr=1,0,"+valMax+"&chbh="+barWidth+",0,"+barWidth;
 		imgSrc=imgSrc.replace(" ","%20");
 		%>
 		<h1>Analytics result for <%= analytic.getGtalkId() %> </h1>
