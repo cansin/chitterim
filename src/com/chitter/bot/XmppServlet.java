@@ -91,7 +91,11 @@ public class XmppServlet extends HttpServlet {
 			} else if (message.getBody().startsWith("/quote ") ||
 					message.getBody().startsWith("/q ") ||
 					message.getBody().startsWith(".quote ") ||
-					message.getBody().startsWith(".q ") ) {
+					message.getBody().startsWith(".q ") ||
+					message.getBody().equalsIgnoreCase("/quote") ||
+					message.getBody().equalsIgnoreCase("/q") ||
+					message.getBody().equalsIgnoreCase(".quote") ||
+					message.getBody().equalsIgnoreCase(".q")) {
 				strategy=new QuoteStrategy();
 			} else if (message.getBody().equalsIgnoreCase("/on") ||
 					message.getBody().equalsIgnoreCase(".on") ) {
