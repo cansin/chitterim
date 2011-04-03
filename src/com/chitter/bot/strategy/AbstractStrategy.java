@@ -24,7 +24,6 @@ public abstract class AbstractStrategy {
 		.withMessageType(MessageType.CHAT)
 		.withBody(body)
 		.build();
-
 		xmppService.sendMessage(reply);
 	}
 
