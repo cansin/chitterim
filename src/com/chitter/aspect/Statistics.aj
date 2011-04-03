@@ -53,6 +53,9 @@ public aspect Statistics {
 				UserStatistic analytic = analyticsIt.next();
 				float[] analyticArr = analytic.getStatistics();
 				for(int i=0;i<analyticArr.length;i++){
+					if(	analytic.getGtalkId().equals("cansinyildiz@gmail.com")||
+						analytic.getGtalkId().equals("chitter.im.tester@gmail.com"))
+						continue;
 					if(analyticEnum.equals(AnalyticEnum.SUM) || analyticEnum.equals(AnalyticEnum.AVG)) {
 						totalAnalytic.setStatistic(i, totalAnalytic.getStatistic(i)+analyticArr[i]);
 					} else if(analyticEnum.equals(AnalyticEnum.MAX)){
