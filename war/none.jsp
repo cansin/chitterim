@@ -13,9 +13,9 @@
 		<div class="step">
 			<%
 				if(reauthorize!=null && reauthorize.equals("reauthorize")){ 
-					out.println("<img src=\"img/red.png\" alt=\"\" >");
+					out.println("<img src=\"img/red.png\" alt=\"\" />");
 				} else {
-					out.println("<img src=\"img/blue.png\" alt=\"\" >");
+					out.println("<img src=\"img/blue.png\" alt=\"\" />");
 				}
 				
 				out.println("<p class=\"nomargin\">Welcome back, <b>"+user.getEmail()+"</b> <a class=\"tiny\" href=\" "+ gtalkLogoutUrl +"\">logout</a>.</p>");

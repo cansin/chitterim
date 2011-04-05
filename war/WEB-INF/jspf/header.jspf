@@ -1,16 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta property="og:image" content="http://chitterim.appspot.com/img/logo.png"/> 
-<link rel="SHORTCUT ICON" href="/favicon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta property="og:title" content="Chitter.im: a Gtalk bot for Twitter" />
+<meta property="og:type" content="product" />
+<meta property="og:url" content="http://chitterim.appspot.com/" />
+<meta property="og:image" content="http://chitterim.appspot.com/img/logo.png" />
+<meta property="og:site_name" content="Chitter.im: a Gtalk bot for Twitter" />
+<meta property="fb:admins" content="685872016" />
+<meta property="fb:page_id" content="211851145493359" />
+<link rel="image_src" href="http://chitterim.appspot.com/img/logo.png"/>
+<link rel="SHORTCUT ICON" href="/favicon.ico" />
 <link rel="icon" 
       type="image/ico" 
       href="/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css">
-<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" />
+<link rel="stylesheet" type="text/css" href="/style.css" />
 <title>Chitter.im: a Gtalk bot for Twitter</title>
 
 <script type="text/javascript">
@@ -41,14 +50,15 @@
 <div id="header">
 	<div class="wrapper">
 		<div id="logo">
-			<a href="/"><img src="img/logo.png" alt="Chitter.im" ></a>
+			<a href="/"><img src="img/logo.png" alt="Chitter.im" /></a>
 		</div>
 		<div id="explanation">
 			<p>
 				<span class="chitter">Chitter.im</span> is a Gtalk bot that allows you to communicate with Twitter very simply. 
-				<img src="img/doodle.png" alt="Chitter.im" >
+				<img src="img/doodle.png" alt="Chitter.im" />
 			</p>
 		</div>
-		<iframe src="http://www.facebook.com/plugins/like.php?href=chitterim.appspot.com&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=recommend&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px; margin: 5px;" allowTransparency="true"></iframe>
+		<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fchitterim.appspot.com%2F&amp;layout=button_count&amp;show_faces=false&amp;width=80&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:20px; padding-top:5px; padding-left:5px;" allowTransparency="true"></iframe>
+		<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://chitterim.appspot.com/" data-count="horizontal" data-via="cansinyildiz" data-related="chitterim:A bot to enable Twitter usage within GTalk.">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	</div>
 </div>
