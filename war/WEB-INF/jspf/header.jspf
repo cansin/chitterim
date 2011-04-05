@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta property="og:image" content="http://chitterim.appspot.com/img/logo.png"/> 
 <link rel="SHORTCUT ICON" href="/favicon.ico">
 <link rel="icon" 
       type="image/ico" 
@@ -32,11 +33,10 @@
 <body>
 
 <div id="headerLine">
-	<div class="wrapper">
-		<span>Home</span> <a href="http://chitterim.blogspot.com" onclick="_gaq.push(['_link', 'http://chitterim.blogspot.com']); return false;">Blog</a> <a href="analytics">Analytics</a>
+	<div class="wrapper"> 
+		<span>Home</span> <a href="http://chitterim.blogspot.com" onclick="_gaq.push(['_link', 'http://chitterim.blogspot.com']); return false;">Blog</a>
 	</div>
 </div>
-
 <div id="container">
 <div id="header">
 	<div class="wrapper">
@@ -49,5 +49,6 @@
 				<img src="img/doodle.png" alt="Chitter.im" >
 			</p>
 		</div>
+		<iframe src="http://www.facebook.com/plugins/like.php?href=chitterim.appspot.com&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=recommend&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px; margin: 5px;" allowTransparency="true"></iframe>
 	</div>
 </div>
