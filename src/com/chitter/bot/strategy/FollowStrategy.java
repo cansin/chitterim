@@ -14,11 +14,20 @@ public class FollowStrategy extends AbstractStrategy {
 		String followeeScreenName = message.getBody().substring(message.getBody().indexOf(' '), message.getBody().length()).trim();
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
-		if(!twitter.existsFriendship(twitter.getScreenName(), followeeScreenName)){
+		try {
+			if(!twitter.existsFriendship(twitter.getScreenName(), followeeScreenName)){
+				twitter.createFriendship(followeeScreenName);
+				replyToMessage(message, "You start following _*"+followeeScreenName+"*_.");	
+			} else {
+				replyToMessage(message, "You are already following _*"+followeeScreenName+"*_.");
+			}
+		} catch (TwitterException e) {
+			/**
+			 *  If existsFriendship throws an exception, 
+			 *  we know that followee is a protected non-friend.
+			 */
 			twitter.createFriendship(followeeScreenName);
-			replyToMessage(message, "You start following _*"+followeeScreenName+"*_.");	
-		} else {
-			replyToMessage(message, "You are already following _*"+followeeScreenName+"*_.");
+			replyToMessage(message, "You send a request to follow _*"+followeeScreenName+"*_.");		
 		}
 	}
 

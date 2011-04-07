@@ -14,11 +14,19 @@ public class UnfollowStrategy extends AbstractStrategy {
 		String unfolloweeScreenName = message.getBody().substring(message.getBody().indexOf(' '), message.getBody().length()).trim();
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
-		if(!twitter.existsFriendship(twitter.getScreenName(), unfolloweeScreenName)){
+		try {
+			if(!twitter.existsFriendship(twitter.getScreenName(), unfolloweeScreenName)){
+				replyToMessage(message, "You are already _not_ following _*"+unfolloweeScreenName+"*_.");
+			} else {
+				twitter.destroyFriendship(unfolloweeScreenName);
+				replyToMessage(message, "You stop following _*"+unfolloweeScreenName+"*_.");
+			}
+		} catch(TwitterException e) {
+			/**
+			 *  If existsFriendship throws an exception, 
+			 *  we know that unfollowee is a protected non-friend.
+			 */
 			replyToMessage(message, "You are already _not_ following _*"+unfolloweeScreenName+"*_.");
-		} else {
-			twitter.destroyFriendship(unfolloweeScreenName);
-			replyToMessage(message, "You stop following _*"+unfolloweeScreenName+"*_.");
 		}
 	}
 

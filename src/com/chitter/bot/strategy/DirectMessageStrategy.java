@@ -16,10 +16,18 @@ public class DirectMessageStrategy extends AbstractStrategy {
 		messageBody = messageBody.substring(messageBody.indexOf(' '));
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
-		if(twitter.existsFriendship(receiverScreenName,twitter.getScreenName())){
-			twitter.sendDirectMessage(receiverScreenName, messageBody);
-			replyToMessage(message, "You sent direct message to _*" + receiverScreenName +"*_.");
-		} else {
+		try {
+			if(twitter.existsFriendship(receiverScreenName,twitter.getScreenName())){
+				twitter.sendDirectMessage(receiverScreenName, messageBody);
+				replyToMessage(message, "You sent direct message to _*" + receiverScreenName +"*_.");
+			} else {
+				replyToMessage(message, "You cannot send direct message to _*" + receiverScreenName +"*_.");
+			}
+		} catch(TwitterException e) {
+			/**
+			 *  If existsFriendship throws an exception, 
+			 *  we know that receiver is a protected non-friend.
+			 */
 			replyToMessage(message, "You cannot send direct message to _*" + receiverScreenName +"*_.");
 		}
 	}

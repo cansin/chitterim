@@ -11,4 +11,11 @@
 	<inbound-services>
 		<service>xmpp_message</service>
 	</inbound-services>
+	
+	<static-files>
+        <include path="/img/**.png" expiration="365d" />
+        <include path="/**.css" expiration="365d" />
+        <include path="/robots.txt" expiration="365d" />
+        <include path="/favicon.ico" expiration="365d" />
+    </static-files>
 </appengine-web-app>

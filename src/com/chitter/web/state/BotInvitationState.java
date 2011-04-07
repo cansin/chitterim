@@ -108,7 +108,11 @@ public class BotInvitationState extends AbstractState {
 					twitter.createFriendship(newUserScreenName);
 				}
 			} catch (TwitterException e) {
-				System.err.println("Boss, I couldn't follow registered user from chitter !\n" + e);
+				/**
+				 *  If existsFriendship throws an exception, 
+				 *  we know that new subscribed user is a protected non-friend.
+				 */
+				twitter.createFriendship(newUserScreenName);
 			}
 			/*
 			try{
