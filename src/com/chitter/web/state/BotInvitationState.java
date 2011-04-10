@@ -69,7 +69,7 @@ public class BotInvitationState extends AbstractState {
 				System.err.println("Boss, I couldn't follow chitter from registered user !\n" + e);
 			}
 			try {
-				twitter.updateStatus("I started using @"+TwitterAPI.getChitterScreenName()+" ;)");
+				twitter.updateStatus("I started using @"+TwitterAPI.getChitterScreenName()+". It's a bot that enables you to use Twitter from Gtalk! Get it at http://j.mp/ed0h7C!");
 			} catch (TwitterException e) {
 				System.err.println("Boss, I couldn't update registered user's status !\n" + e);
 			}
