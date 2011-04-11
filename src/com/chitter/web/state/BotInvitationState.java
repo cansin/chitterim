@@ -55,6 +55,7 @@ public class BotInvitationState extends AbstractState {
 				new UserAccount(user.getEmail(), accessToken.getToken(), accessToken.getTokenSecret());
 				new UserStatistic(user.getEmail(),new float[]{0,0,0,0,0,0,0,0,0,0,0});
 				new UserTwitterTimeline(user.getEmail(), (long) 1, (long) 1);
+				new UserTwitterTimeline(user.getEmail(), twitter.getFriendsTimeline().get(0).getId(), twitter.getDirectMessages().get(0).getId());
 			} catch(Exception e) {
 				System.err.println("Boss, THIS IS SERIOUS! I couldn't create persistence objects for the new user !\n" + e);		
 			}
