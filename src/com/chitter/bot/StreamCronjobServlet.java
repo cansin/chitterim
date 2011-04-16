@@ -18,7 +18,7 @@ import com.google.appengine.api.xmpp.XMPPService;
 import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
 @SuppressWarnings("serial")
-public class CronjobServlet extends HttpServlet {
+public class StreamCronjobServlet extends HttpServlet {
 
 	private static final XMPPService xmppService =
 		XMPPServiceFactory.getXMPPService();
@@ -51,7 +51,7 @@ public class CronjobServlet extends HttpServlet {
 			UserAccount userAccount = it.next();
 			Presence presence=xmppService.getPresence(new JID(userAccount.getGtalkId()));
 			if(presence.isAvailable() && userAccount.getIsTimelineActive()) {
-				queue.add(Builder.withUrl("/task?gtalkId="+userAccount.getGtalkId()+
+				queue.add(Builder.withUrl("/stream-task?gtalkId="+userAccount.getGtalkId()+
 										"&accessToken="+userAccount.getTwitterAccessToken()+
 										"&accessTokenSecret="+userAccount.getTwitterAccessTokenSecret())
 										.method(Method.GET));	

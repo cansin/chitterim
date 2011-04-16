@@ -41,22 +41,32 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
 	 
      <servlet>
-       <servlet-name>cronjob</servlet-name>
-       <servlet-class>com.chitter.bot.CronjobServlet</servlet-class>
+       <servlet-name>stream-cronjob</servlet-name>
+       <servlet-class>com.chitter.bot.StreamCronjobServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>cronjob</servlet-name>
-        <url-pattern>/cronjob</url-pattern>
+        <servlet-name>stream-cronjob</servlet-name>
+        <url-pattern>/stream-cronjob</url-pattern>
     </servlet-mapping>
 	 
      <servlet>
-       <servlet-name>task</servlet-name>
-       <servlet-class>com.chitter.bot.TaskServlet</servlet-class>
+       <servlet-name>stream-task</servlet-name>
+       <servlet-class>com.chitter.bot.StreamTaskServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>task</servlet-name>
-        <url-pattern>/task</url-pattern>
+        <servlet-name>stream-task</servlet-name>
+        <url-pattern>/stream-task</url-pattern>
     </servlet-mapping>
+	 
+     <servlet>
+       <servlet-name>announce-cronjob</servlet-name>
+       <servlet-class>com.chitter.bot.AnnounceCronjobServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>announce-cronjob</servlet-name>
+        <url-pattern>/announce-cronjob</url-pattern>
+    </servlet-mapping>
+	 
 	 
      <servlet>
        <servlet-name>twitter</servlet-name>
@@ -83,15 +93,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	 <security-constraint>
         <web-resource-collection>
         	<web-resource-name>Cronjob</web-resource-name>
-            <url-pattern>/task</url-pattern>
-            <url-pattern>/cronjob</url-pattern>  
+            <url-pattern>/stream-task</url-pattern>
+            <url-pattern>/stream-cronjob</url-pattern>  
         </web-resource-collection>    
         <web-resource-collection>
         	<web-resource-name>Analytics</web-resource-name>
             <url-pattern>/analytics</url-pattern>
         </web-resource-collection>
         <web-resource-collection>
-        	<web-resource-name>Admin</web-resource-name>
+        	<web-resource-name>Script</web-resource-name>
             <url-pattern>/test</url-pattern>
         </web-resource-collection>
         <auth-constraint>

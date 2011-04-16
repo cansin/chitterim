@@ -24,7 +24,7 @@ import com.google.appengine.api.xmpp.XMPPService;
 import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
 @SuppressWarnings("serial")
-public class TaskServlet  extends HttpServlet {
+public class StreamTaskServlet  extends HttpServlet {
 
 	private static final XMPPService xmppService =
 		XMPPServiceFactory.getXMPPService();

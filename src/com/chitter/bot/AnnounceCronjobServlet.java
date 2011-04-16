@@ -1,4 +1,4 @@
-package com.chitter.test;
+package com.chitter.bot;
 
 import java.util.List;
 import java.util.Random;
@@ -11,16 +11,10 @@ import twitter4j.Twitter;
 
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.Announcement;
-import com.google.appengine.api.xmpp.XMPPService;
-import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
 @SuppressWarnings("serial")
-public class TestServlet extends HttpServlet {
-
-	@SuppressWarnings("unused")
-	private static final XMPPService xmppService =
-		XMPPServiceFactory.getXMPPService();
-
+public class AnnounceCronjobServlet extends HttpServlet {
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			processRequest(request,response);
@@ -35,8 +29,8 @@ public class TestServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Twitter twitter = TwitterAPI.getInstanceForChitter();
 		
 		@SuppressWarnings("unchecked")
@@ -51,5 +45,4 @@ public class TestServlet extends HttpServlet {
 			System.err.println("Announcement exceeds 140 chars: "+announcement);
 		}
 	}
-
 }

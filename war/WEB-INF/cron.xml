@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/cronjob</url>
+    <url>/stream-cronjob</url>
     <description>Fetch Twitter streams of online users every 1 minute</description>
     <schedule>every 1 minutes</schedule>
+  </cron>
+  <cron>
+    <url>/announce-cronjob</url>
+    <description>Send a daily "Did you know that?" message to Chitter.im users</description>
+    <schedule>every mon,thu 12:00</schedule>
   </cron>
 </cronentries>

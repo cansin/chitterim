@@ -11,6 +11,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chitter.persistence.Announcement;
 import com.chitter.persistence.UserAccount;
 import com.chitter.persistence.UserStatistic;
 
@@ -35,6 +36,11 @@ public aspect Persistence {
 	@SuppressWarnings("all")
 	public static List UserStatistic.getUserStatisticList() {
 		return new ArrayList<UserStatistic> ();
+	}
+
+	@SuppressWarnings("all")
+	public static List Announcement.getAnnouncementList() {
+		return new ArrayList<Announcement> ();
 	}
 
 	private static final PersistenceManagerFactory PMF =
