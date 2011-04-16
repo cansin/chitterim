@@ -33,10 +33,7 @@ public class LoggedInState extends AbstractState {
 		RequestToken requestToken;
 		try {
 			requestToken = TwitterAPI.getRequestToken();
-			String token = requestToken.getToken();
-			String tokenSecret = requestToken.getTokenSecret();
-			session.setAttribute("token", token);
-			session.setAttribute("tokenSecret", tokenSecret);
+			session.setAttribute("requestToken", requestToken);
 			
 			Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
 			String twitterScreenName = twitter.getScreenName();
@@ -49,6 +46,7 @@ public class LoggedInState extends AbstractState {
 			
 		} catch (TwitterException e) {
 			System.err.println("-----------------Logged-in-State-------------------");
+			System.err.println(e);
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");

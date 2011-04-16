@@ -74,6 +74,7 @@ public aspect Statistics {
 			return totalAnalytic;
 		} catch (Exception e) {
 			System.out.println("I will return null for total analytic ");
+			System.err.println(e);
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.out.println(e.getStackTrace()[i].toString());
 			return null;

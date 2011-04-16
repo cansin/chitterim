@@ -45,6 +45,7 @@ public class QuoteStrategy extends AbstractStrategy {
 		} catch (Exception e) {
 			System.err.println("Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s quote:\n "+quote);
 			System.err.println("-----------QuoteStrategy-Exception-----------------");
+			System.err.println(e);
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");

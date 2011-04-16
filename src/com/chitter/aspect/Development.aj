@@ -47,13 +47,13 @@ public aspect Development {
 	}
 
 	// Exception Logger when in aspect.Persistence
-	before(Exception e) : 
+	/*before(Exception e) : 
 		persistenceExceptionLog(e){
 		System.err.println("-------------Persistence-Exception-----------------");
 		for(int i=0;i<e.getStackTrace().length;i++)
 			System.err.println(e.getStackTrace()[i].toString());
 		System.err.println("---------------------------------------------------");
-	}
+	}*/
 
 	// Exception Logger when in aspect.Statistics
 	before(Exception e) : 
@@ -67,6 +67,7 @@ public aspect Development {
 	// Exception Logger when returning from handleMessage
 	after(UserAccount user) throwing(TwitterException e):
 		target(AbstractStrategy) && call(public void handleMessage(UserAccount, Message)) && args(user, ..){
+		System.err.println(e);
 		System.err.println("-------------Exp-For-"+user.getGtalkId()+"---------");
 		for(int i=0;i<e.getStackTrace().length;i++)
 			System.err.println(e.getStackTrace()[i].toString());

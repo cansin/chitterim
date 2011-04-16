@@ -16,9 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import twitter4j.DirectMessage;
+import twitter4j.ResponseList;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
@@ -38,26 +41,58 @@ public class BotInvitationState extends AbstractState {
 
 	@Override
 	public void processRequest(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
+		System.out.println("Boss, current state is "+toString());
+		HttpSession session = request.getSession();
+		
+		User user = (User)session.getAttribute("user");
+
+		/**
+		 * If request does not have necessary parameters
+		 * or it has a 'denied' as a parameter, it means
+		 * something went wrong at twitter authorization state so
+		 * we should get back to login page;
+		 */
+		String denied = request.getParameter("denied");
+		String oauthToken= request.getParameter("oauth_token");
+		String oauthVerifier= request.getParameter("oauth_verifier");
+		if(denied!=null || (oauthToken==null && oauthVerifier==null)){
+			System.err.println("I redirected "+user.getEmail()+" from /twitter to /login page");
+			if(denied!=null)
+				System.err.println("Because denied!=null");
+			else
+				System.err.println("Because oauthToken==null && oauthVerifier==null");
+			response.sendRedirect("/login");
+			return;
+		}
+		
 		try {
-			System.out.println("Boss, current state is "+toString());
-			HttpSession session = request.getSession();
-			String token=(String)session.getAttribute("token");
-			String tokenSecret=(String)session.getAttribute("tokenSecret");
-			
-			System.out.println(token+" "+tokenSecret);
-			AccessToken accessToken = TwitterAPI.getAccessTokenFor(token, tokenSecret, request.getParameter("oauth_verifier"));
+			RequestToken requestToken =(RequestToken)session.getAttribute("requestToken");
+			AccessToken accessToken = TwitterAPI.getAccessTokenFor(requestToken, request.getParameter("oauth_verifier"));
 			Twitter twitter = TwitterAPI.getInstanceFor(accessToken.getToken(), accessToken.getTokenSecret());
 	
-			User user = (User)session.getAttribute("user");
 			
 			try {
 				new UserAccount(user.getEmail(), accessToken.getToken(), accessToken.getTokenSecret());
-				new UserStatistic(user.getEmail(),new float[]{0,0,0,0,0,0,0,0,0,0,0});
+				new UserStatistic(user.getEmail(),new float[UserStatistic.statisticsLabels.length]);
 				new UserTwitterTimeline(user.getEmail(), (long) 1, (long) 1);
-				new UserTwitterTimeline(user.getEmail(), twitter.getFriendsTimeline().get(0).getId(), twitter.getDirectMessages().get(0).getId());
+				
+				/**
+				 *  Adjust UserTwitterTimeline object so that new registered user
+				 *  will only get last tweet from timeline when he first interacts w/ bot.
+				 */
+				long ttSinceId = 1;
+				long dmSinceId = 1;
+				ResponseList<twitter4j.Status> tts=twitter.getFriendsTimeline();
+				ResponseList<DirectMessage> dms=twitter.getDirectMessages();
+				if(tts.size()>1)
+					ttSinceId = tts.get(1).getId();
+				if(dms.size()>1)
+					dmSinceId = dms.get(1).getId();
+				new UserTwitterTimeline(user.getEmail(), ttSinceId, dmSinceId);
+					 
 			} catch(Exception e) {
-				System.err.println("Boss, THIS IS SERIOUS! I couldn't create persistence objects for the new user !\n" + e);		
+				System.err.println("Boss, THIS IS SERIOUS! I couldn't create persistence objects for the new user: "+user.getEmail()+" !\n" + e);		
 			}
 	
 			xmppService.sendInvitation(new JID(user.getEmail()));
@@ -82,15 +117,15 @@ public class BotInvitationState extends AbstractState {
 				System.err.println("Boss, I couldn't get the screen name of the user !\n" + e);
 			}
 			
-			/** Send an email to cansinyildiz@gmail.com to notify me */
+			/** Send an email to cansin@chitter.im to notify me */
 			Properties props = new Properties();
-	        Session ses = Session.getDefaultInstance(props, null);
+	        Session ses = Session.getInstance(props);
 	        String msgBody = "...";
 	        try {
 	            Message msg = new MimeMessage(ses);
-	            msg.setFrom(new InternetAddress("cansinyildiz@gmail.com", "Chitter.im"));
+	            msg.setFrom(new InternetAddress("cansin@chitter.im", "Cansin Yildiz"));
 	            msg.addRecipient(Message.RecipientType.TO,
-	                             new InternetAddress("cansinyildiz@gmail.com", "Cansin Yildiz"));
+	                             new InternetAddress("cansin@chitter.im", "Cansin Yildiz"));
 	            msg.setSubject("New User w/ Twitter: "+newUserScreenName+" Gmail: "+user.getEmail());
 	            msg.setText(msgBody);
 	            Transport.send(msg);
@@ -124,11 +159,12 @@ public class BotInvitationState extends AbstractState {
 			*/
 	
 		} catch(Exception e){
+			System.err.println("For user "+user.getEmail());
 			System.err.println("------------Bot-Invitation-State-------------------");
+			System.err.println(e);
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");
-			//response.sendRedirect("/");
 		}
 		
 	}

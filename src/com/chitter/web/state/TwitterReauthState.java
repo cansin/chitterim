@@ -30,10 +30,7 @@ public class TwitterReauthState extends AbstractState {
 		RequestToken requestToken;
 		try {
 			requestToken = TwitterAPI.getRequestToken();
-			String token = requestToken.getToken();
-			String tokenSecret = requestToken.getTokenSecret();
-			session.setAttribute("token", token);
-			session.setAttribute("tokenSecret", tokenSecret);
+			session.setAttribute("requestToken", requestToken);
 			
 			request.setAttribute("reauthorize", "reauthorize");
 
@@ -41,6 +38,7 @@ public class TwitterReauthState extends AbstractState {
 			request.setAttribute("twitterAuthenticateUrl", requestToken.getAuthenticationURL()+"&force_login=true");
 		} catch (TwitterException e) {
 			System.err.println("--------------Twitter-Reauth-State-----------------");
+			System.err.println(e);
 			for(int i=0;i<e.getStackTrace().length;i++)
 				System.err.println(e.getStackTrace()[i].toString());
 			System.err.println("---------------------------------------------------");
