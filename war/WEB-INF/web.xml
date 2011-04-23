@@ -40,9 +40,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <url-pattern>/analytics</url-pattern>
     </servlet-mapping>
 	 
-     <servlet>
-       <servlet-name>stream-cronjob</servlet-name>
-       <servlet-class>com.chitter.bot.StreamCronjobServlet</servlet-class>
+    <servlet>
+       	<servlet-name>stream-cronjob</servlet-name>
+    	<servlet-class>com.chitter.bot.StreamCronjobServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>stream-cronjob</servlet-name>
@@ -95,6 +95,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         	<web-resource-name>Cronjob</web-resource-name>
             <url-pattern>/stream-task</url-pattern>
             <url-pattern>/stream-cronjob</url-pattern>  
+            <url-pattern>/announce-cronjob</url-pattern>
         </web-resource-collection>    
         <web-resource-collection>
         	<web-resource-name>Analytics</web-resource-name>
