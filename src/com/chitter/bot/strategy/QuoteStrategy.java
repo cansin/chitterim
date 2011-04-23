@@ -1,19 +1,18 @@
 package com.chitter.bot.strategy;
 
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
 
 import com.chitter.external.BitlyAPI;
 import com.chitter.external.QuotesAPI;
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
+import com.chitter.utility.ExceptionPrinter;
 import com.google.appengine.api.xmpp.Message;
 
 public class QuoteStrategy extends AbstractStrategy {
 
 	@Override
-	public void handleMessage(UserAccount userAccount, Message message)
-			throws TwitterException {
+	public void handleMessage(UserAccount userAccount, Message message) {
 		
 		// If no category has been written just inform user on available categories.
 		if( message.getBody().equalsIgnoreCase("/quote") ||
@@ -43,12 +42,7 @@ public class QuoteStrategy extends AbstractStrategy {
 						"You can look available categories at http://j.mp/fbSRSr");
 			}
 		} catch (Exception e) {
-			System.err.println("Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s quote:\n "+quote);
-			System.err.println("-----------QuoteStrategy-Exception-----------------");
-			System.err.println(e);
-			for(int i=0;i<e.getStackTrace().length;i++)
-				System.err.println(e.getStackTrace()[i].toString());
-			System.err.println("---------------------------------------------------");
+			ExceptionPrinter.print(System.err, e, "Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s quote:\n "+quote);
 			replyToMessage(message, "I couldn't send your quote.");
 		}
 	}

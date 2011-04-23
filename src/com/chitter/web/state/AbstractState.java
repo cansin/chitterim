@@ -1,9 +1,7 @@
 package com.chitter.web.state;
 
-import java.io.IOException;
 import java.io.Serializable;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +15,6 @@ public abstract class AbstractState implements Serializable {
 	protected static final UserService userService = 
 		UserServiceFactory.getUserService();
 	
-	abstract public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
-	abstract public void forward(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	abstract public void processRequest(HttpServletRequest request, HttpServletResponse response);
+	abstract public void forward(HttpServletRequest request, HttpServletResponse response);
 }

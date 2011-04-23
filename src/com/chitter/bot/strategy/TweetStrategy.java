@@ -6,12 +6,13 @@ import twitter4j.TwitterException;
 import com.chitter.external.BitlyAPI;
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
+import com.chitter.utility.ExceptionPrinter;
 import com.google.appengine.api.xmpp.Message;
 
 public class TweetStrategy extends AbstractStrategy {
 
 	@Override
-	public void handleMessage(UserAccount userAccount, Message message)  throws TwitterException {
+	public void handleMessage(UserAccount userAccount, Message message) {
 		String messageBody = message.getBody().substring(message.getBody().indexOf(' '), message.getBody().length()).trim();
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
@@ -25,12 +26,7 @@ public class TweetStrategy extends AbstractStrategy {
 				replyToMessage(message, "Your message has "+(messageBody.length()-140)+" extra characters.");
 			}
 		} catch (TwitterException e) {
-			System.err.println("Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s message. ");
-			System.err.println("-----------TweetStrategy-Exception-----------------");
-			System.err.println(e);
-			for(int i=0;i<e.getStackTrace().length;i++)
-				System.err.println(e.getStackTrace()[i].toString());
-			System.err.println("---------------------------------------------------");
+			ExceptionPrinter.print(System.err, e, "Boss, I couldn't tweet "+userAccount.getGtalkId()+"'s message.");
 			replyToMessage(message, "I couldn't send your tweet.");	
 		}	
 	}

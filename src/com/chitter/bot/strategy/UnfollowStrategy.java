@@ -10,7 +10,7 @@ import com.google.appengine.api.xmpp.Message;
 public class UnfollowStrategy extends AbstractStrategy {
 
 	@Override
-	public void handleMessage(UserAccount userAccount, Message message) throws TwitterException {
+	public void handleMessage(UserAccount userAccount, Message message) {
 		String unfolloweeScreenName = message.getBody().substring(message.getBody().indexOf(' '), message.getBody().length()).trim();
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);

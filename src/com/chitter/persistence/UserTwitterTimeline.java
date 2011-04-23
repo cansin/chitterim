@@ -10,6 +10,9 @@ public class UserTwitterTimeline {
 	@PrimaryKey
 	@Persistent
 	private String gtalkId;
+	public void jdoPreStore() {
+		gtalkId = gtalkId.toLowerCase();
+	}
 
 	@Persistent
 	private Long twitterTimelineSinceId;
@@ -19,7 +22,7 @@ public class UserTwitterTimeline {
 	
 
 	public UserTwitterTimeline(String gtalkId, Long twitterTimelineSinceId, Long twitterDirectMessageSinceId){
-		this.gtalkId=gtalkId;
+		this.gtalkId=gtalkId.toLowerCase();
 		this.twitterTimelineSinceId=twitterTimelineSinceId;
 		this.twitterDirectMessageSinceId=twitterDirectMessageSinceId;
 	}
@@ -35,7 +38,7 @@ public class UserTwitterTimeline {
 	}
 
 	public void setGtalkId(String gtalkId) {
-		this.gtalkId = gtalkId;
+		this.gtalkId = gtalkId.toLowerCase();
 	}
 
 	public void setTwitterTimelineSinceId(Long twitterTimelineSinceId) {

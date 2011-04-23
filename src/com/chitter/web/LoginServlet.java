@@ -1,8 +1,5 @@
 package com.chitter.web;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,21 +25,13 @@ public class LoginServlet extends HttpServlet {
 		UserServiceFactory.getUserService();
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		//if(request.getServerName().equals("chitterim.appspot.com")) response.sendRedirect("http://www.chitter.im");
 		
 		// First Step
@@ -52,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			//GTalk Login
 			User user = userService.getCurrentUser();
-			UserAccount userAccount = new UserAccount(user.getEmail());
+			UserAccount userAccount = new UserAccount(user.getEmail().toLowerCase());
 			
 			// Second Step
 			if(userAccount == null || userAccount.getGtalkId() == null) {
@@ -72,7 +61,6 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 
-		System.out.println("Boss, I will processRequest now!");
 		AbstractState state = (AbstractState) request.getSession().getAttribute("state");
 		state.processRequest(request, response);
 		state.forward(request, response);

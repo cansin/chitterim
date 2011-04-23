@@ -10,7 +10,7 @@ import com.google.appengine.api.xmpp.Message;
 public class DirectMessageStrategy extends AbstractStrategy {
 
 	@Override
-	public void handleMessage(UserAccount userAccount, Message message) throws TwitterException {
+	public void handleMessage(UserAccount userAccount, Message message) {
 		String messageBody = message.getBody().substring(message.getBody().indexOf(' '), message.getBody().length()).trim();
 		String receiverScreenName = messageBody.substring(0, messageBody.indexOf(' ')).trim();
 		messageBody = messageBody.substring(messageBody.indexOf(' '));

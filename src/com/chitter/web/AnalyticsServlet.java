@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.chitter.persistence.UserStatistic;
+import com.chitter.utility.ExceptionPrinter;
 import com.google.appengine.api.xmpp.XMPPService;
 import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
@@ -17,21 +18,13 @@ public class AnalyticsServlet extends HttpServlet {
 		XMPPServiceFactory.getXMPPService();
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 
-	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		String type=request.getParameter("type");
 		if(type==null || type.isEmpty()) {
 			;
@@ -44,11 +37,15 @@ public class AnalyticsServlet extends HttpServlet {
 		} else if (type.equals("sum")){
 			request.setAttribute("analytic", UserStatistic.getSumAnalytic());
 		} else if (type.equals("user")){
-			request.setAttribute("analytic", new UserStatistic(request.getParameter("gtalkId")));
+			request.setAttribute("analytic", new UserStatistic(request.getParameter("gtalkId").trim()));
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("analytics.jsp");
-		rd.forward(request, response);
+		try {
+			rd.forward(request, response);
+		} catch (Exception e) {
+			ExceptionPrinter.print(System.err, e, "I couldn't forwarded AnalyticsServlet's response to analytics.jsp");
+		}
 	}
 
 }

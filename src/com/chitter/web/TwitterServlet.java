@@ -2,7 +2,6 @@ package com.chitter.web;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +11,7 @@ import twitter4j.TwitterException;
 
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
+import com.chitter.utility.ExceptionPrinter;
 import com.chitter.web.state.AbstractState;
 import com.chitter.web.state.BotInvitationState;
 import com.chitter.web.state.LoggedInState;
@@ -27,25 +27,16 @@ public class TwitterServlet extends HttpServlet {
 		UserServiceFactory.getUserService();
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IllegalStateException {
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		//if(request.getServerName().equals("chitterim.appspot.com")) response.sendRedirect("http://www.chitter.im");
 
 		AbstractState state = (AbstractState)request.getSession().getAttribute("state");
-		System.out.println("Boss, previous state was "+state.toString());
 		if(state.getClass().equals(TwitterAuthState.class)) {
 			state = new BotInvitationState();
 			request.getSession().setAttribute("state", state);
@@ -60,7 +51,7 @@ public class TwitterServlet extends HttpServlet {
 			request.getSession().setAttribute("state", state);
 			state.processRequest(request, response);
 			try {
-				Twitter twitter = TwitterAPI.getInstanceFor(new UserAccount(userService.getCurrentUser().getEmail()));
+				Twitter twitter = TwitterAPI.getInstanceFor(new UserAccount(userService.getCurrentUser().getEmail().toLowerCase()));
 				twitter.getScreenName();
 				state = new LoggedInState();
 			} catch (TwitterException e) {
@@ -68,8 +59,11 @@ public class TwitterServlet extends HttpServlet {
 			}
 			request.getSession().setAttribute("state", state);
 		} else {
-			System.out.println("Boss, I'm redirecting");
-			response.sendRedirect("/");
+			try {
+				response.sendRedirect("/");
+			} catch (IOException e) {
+				ExceptionPrinter.print(System.err, e, "I couldn't redirect TwitterServlet to /");
+			}
 		}
 			
 		state = (AbstractState) request.getSession().getAttribute("state");

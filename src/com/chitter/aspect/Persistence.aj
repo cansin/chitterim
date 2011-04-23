@@ -3,6 +3,7 @@ package com.chitter.aspect;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.chitter.persistence.Announcement;
 import com.chitter.persistence.UserAccount;
 import com.chitter.persistence.UserStatistic;
+import com.chitter.persistence.UserTwitterTimeline;
+import com.chitter.utility.ExceptionPrinter;
 
 public aspect Persistence {	
 	/** 
@@ -23,10 +26,16 @@ public aspect Persistence {
 	pointcut pushObject(Object o): target(o) && (call(* (@PersistenceCapable *).set*(..)) || execution((@PersistenceCapable *).new(*,*,..)));
 	pointcut pullObject(Object pk): args(pk) && call((@PersistenceCapable *).new(*));
 	pointcut pullList(): call(List (@PersistenceCapable *).get*List());
+	pointcut pullExtent(): call(Extent (@PersistenceCapable *).get*Extent());
 	
-	pointcut pmShouldClose() : call(* com.chitter..*Servlet.processRequest(HttpServletRequest,HttpServletResponse) throws *);
+	pointcut pmShouldClose() : call(* com.chitter..*Servlet.processRequest(HttpServletRequest,HttpServletResponse));
 	
 	pointcut withinEscapePersistence(): withincode(@EscapePersistence * *(..));
+	
+	@SuppressWarnings("all")
+	public static Extent UserAccount.getUserAccountExtent(){
+		return null;
+	}
 	
 	@SuppressWarnings("all")
 	public static List UserAccount.getUserAccountList(){
@@ -36,6 +45,11 @@ public aspect Persistence {
 	@SuppressWarnings("all")
 	public static List UserStatistic.getUserStatisticList() {
 		return new ArrayList<UserStatistic> ();
+	}
+
+	@SuppressWarnings("all")
+	public static List UserTwitterTimeline.getUserTwitterTimelineList() {
+		return new ArrayList<UserTwitterTimeline> ();
 	}
 
 	@SuppressWarnings("all")
@@ -60,11 +74,15 @@ public aspect Persistence {
     }
     
     after(Object o) : pushObject(o) && !withinEscapePersistence(){
-		System.out.println("I should persist an instance of "+o.getClass());
     	PersistenceManager pm = getPM();
     	try{
+    		/**
+    		 * First try to convert object to UserStatistic.
+    		 * If you can, that means the persistent object was UserStatistic,
+    		 * so you should flag statistics array as dirty.
+    		 * (o.w. it will not persist changes to the array.)
+    		 */
     		UserStatistic statistic=(UserStatistic) o;
-    		System.out.println("which is a statistic object btw with pk "+statistic.getGtalkId());
     		JDOHelper.makeDirty(statistic, "statistics");
     	} catch(Exception e) {
     	} finally {
@@ -89,20 +107,30 @@ public aspect Persistence {
 		PersistenceManager pm = getPM();
 		
 		try {
-			System.out.println("I am trying to pull a list of "+getClass()+" from db with ");
 			List list = (List) pm.newQuery(thisJoinPoint.getSignature().getDeclaringType()).execute();
-			System.out.println("Yes I did");
 			return list;
 		} catch (Exception e) {
-			System.err.println("No I am returning an empty list");
+			ExceptionPrinter.print(System.err,e,"I couldn't fetch persistent list for "+getClass());
 			return (List)(new ArrayList<Object>());
 		} 
     }
+
+    @SuppressWarnings("all")
+	/*Extent around() : pullExtent() {
+		PersistenceManager pm = getPM();
+		
+		try {
+			Extent extent = pm.getExtent(thisJoinPoint.getSignature().getDeclaringType(), false);
+			return extent;
+		} catch (Exception e) {
+			ExceptionPrinter.print(System.err, e, "I couldn't fetch persistent extent for "+getClass());
+			return null;
+		} 
+    }*/
 	
 	after() : pmShouldClose() {
 		PersistenceManager PM = perThreadPM.get();
 		if (PM != null) {
-			System.out.println("PM should definitely close");
 			perThreadPM.remove();
 			Transaction tx = PM.currentTransaction();
 			if (tx.isActive()) {

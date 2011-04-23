@@ -19,13 +19,16 @@ public class UserStatistic {
 	@PrimaryKey
 	@Persistent
 	private String gtalkId;
+	public void jdoPreStore() {
+		gtalkId = gtalkId.toLowerCase();
+	}
 	
 	@Persistent
 	private float[] statistics;
 
 	public UserStatistic(String gtalkId, float[] analytics) {
 		super();
-		this.gtalkId = gtalkId;
+		this.gtalkId = gtalkId.toLowerCase();
 		this.statistics = analytics;
 	}
 	
@@ -35,7 +38,7 @@ public class UserStatistic {
 	}
 	
 	public void setGtalkId(String gtalkId) {
-		this.gtalkId = gtalkId;
+		this.gtalkId = gtalkId.toLowerCase();
 	}
 	
 	public String getGtalkId() {

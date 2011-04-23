@@ -10,6 +10,9 @@ public class UserAccount {
 	@PrimaryKey
 	@Persistent
 	private String gtalkId;
+	public void jdoPreStore() {
+		gtalkId = gtalkId.toLowerCase();
+	}
 	
 	@Persistent
 	private String twitterAccessToken;
@@ -21,7 +24,7 @@ public class UserAccount {
 	private Boolean isTimelineActive;
 
 	public UserAccount(String gtalkId, String twitterAccessToken, String twitterAccessTokenSecret){
-		this.gtalkId=gtalkId;
+		this.gtalkId=gtalkId.toLowerCase();
 		this.twitterAccessToken=twitterAccessToken;
 		this.twitterAccessTokenSecret=twitterAccessTokenSecret;
 		this.isTimelineActive=true;
@@ -39,7 +42,7 @@ public class UserAccount {
 	}
 
 	public void setGtalkId(String gtalkId) {
-		this.gtalkId = gtalkId;
+		this.gtalkId = gtalkId.toLowerCase();
 	}
 
 	public String getTwitterAccessToken() {

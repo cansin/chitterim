@@ -1,14 +1,12 @@
 package com.chitter.bot.strategy;
 
-import twitter4j.TwitterException;
-
 import com.chitter.persistence.UserAccount;
 import com.google.appengine.api.xmpp.Message;
 
 public class HelpStrategy extends AbstractStrategy {
 
 	@Override
-	public void handleMessage(UserAccount userAccount, Message message) throws TwitterException {
+	public void handleMessage(UserAccount userAccount, Message message) {
 		replyToMessage(message, "You can order me:\n" +
 				"_*/h*_ to show this help.\n" +
 				"_*/on*_ to receive timeline updates\n" +

@@ -1,9 +1,6 @@
 package com.chitter.web.state;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +11,7 @@ import twitter4j.auth.RequestToken;
 
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
+import com.chitter.utility.ExceptionPrinter;
 import com.google.appengine.api.users.User;
 
 public class LoggedInState extends AbstractState {
@@ -21,14 +19,12 @@ public class LoggedInState extends AbstractState {
 	private static final long serialVersionUID = 8740066188624690012L;
 
 	@Override
-	public void processRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Boss, current state is "+toString());
+	public void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
 		User user = userService.getCurrentUser();
 		session.setAttribute("user", user);
-		UserAccount userAccount = new UserAccount(user.getEmail());
+		UserAccount userAccount = new UserAccount(user.getEmail().toLowerCase());
 		
 		RequestToken requestToken;
 		try {
@@ -42,21 +38,19 @@ public class LoggedInState extends AbstractState {
 
 			request.setAttribute("gtalkLogoutUrl", "/logout");
 			request.setAttribute("twitterAuthenticateUrl", requestToken.getAuthenticationURL()+"&force_login=true");
-
-			
+		
 		} catch (TwitterException e) {
-			System.err.println("-----------------Logged-in-State-------------------");
-			System.err.println(e);
-			for(int i=0;i<e.getStackTrace().length;i++)
-				System.err.println(e.getStackTrace()[i].toString());
-			System.err.println("---------------------------------------------------");
+			ExceptionPrinter.print(System.err, e, "I couldn't connect to twitter at LoggedInState for"+userAccount.getGtalkId());
 		}	
 		
 	}
 	
-	public void forward(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public void forward(HttpServletRequest request, HttpServletResponse response)  {
 		RequestDispatcher rd = request.getRequestDispatcher("none.jsp");
-		rd.forward(request, response);
+		try {
+			rd.forward(request, response);	
+		} catch (Exception e) {
+			ExceptionPrinter.print(System.err, e, "I couldn't forwarded LoggedInState's response to none.jsp");
+		}
 	}	
 }

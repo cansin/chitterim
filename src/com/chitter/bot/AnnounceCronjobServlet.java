@@ -8,29 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.Announcement;
+import com.chitter.utility.ExceptionPrinter;
 
 @SuppressWarnings("serial")
 public class AnnounceCronjobServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			processRequest(request,response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		processRequest(request,response);
 	}
 	
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		Twitter twitter = TwitterAPI.getInstanceForChitter();
 		
 		@SuppressWarnings("unchecked")
@@ -40,7 +34,11 @@ public class AnnounceCronjobServlet extends HttpServlet {
 		String announcement = announcements.get(rand).toTweetString();
 		
 		if(announcement.length()<140) {
-			twitter.updateStatus(announcement);
+			try {
+				twitter.updateStatus(announcement);
+			} catch (TwitterException e) {
+				ExceptionPrinter.print(System.err, e, "I couldn't update chitterim's status while trying to make an announcement.");
+			}
 		} else {
 			System.err.println("Announcement exceeds 140 chars: "+announcement);
 		}
