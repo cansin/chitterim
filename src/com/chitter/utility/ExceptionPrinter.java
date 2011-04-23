@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 public class ExceptionPrinter {
 	public static void print(PrintStream out, Exception e) {
-		print(out,e,"");
+		print(out,e,""); 
 	}
 	
 	public static void print(PrintStream out, Exception e, String customMessage) {
