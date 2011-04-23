@@ -40,7 +40,7 @@ public class AnnounceCronjobServlet extends HttpServlet {
 				ExceptionPrinter.print(System.err, e, "I couldn't update chitterim's status while trying to make an announcement.");
 			}
 		} else {
-			System.err.println("Announcement exceeds 140 chars: "+announcement);
+			System.err.println("Announcement exceeds 140 chars: "+announcement); 
 		}
 	}
 }
