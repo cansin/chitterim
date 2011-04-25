@@ -99,7 +99,7 @@ public aspect Statistics {
 		    
 		    //Increment i-th statistic by 1 (e.g. i=0 for DIRECTMESSAGE)
 		    userStatistic.setStatistic(id, userStatistic.getStatistic(id)+1);
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			ExceptionPrinter.print(System.err, e, "I couldn't capture analytic data"); 
 		}
 	    
