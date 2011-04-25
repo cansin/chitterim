@@ -1,6 +1,7 @@
 package com.chitter.bot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -47,10 +48,11 @@ public class StreamCronjobServlet extends HttpServlet {
 		processRequest(request,response);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		
-		@SuppressWarnings("unchecked")
-		List<UserAccount> userAccounts = UserAccount.getUserAccountList();
+		List<UserAccount> userAccounts = new ArrayList<UserAccount>();
+		userAccounts.addAll(UserAccount.getUserAccountList()); 
 		Iterator<UserAccount> it = userAccounts.iterator();
 		
 		while(it.hasNext()){
@@ -64,7 +66,7 @@ public class StreamCronjobServlet extends HttpServlet {
 				try {
 					sendTimelineUpdates(userAccount.getGtalkId(),userAccount.getTwitterAccessToken(),userAccount.getTwitterAccessTokenSecret());
 				} catch (TwitterException e) {
-					ExceptionPrinter.print(System.err, e, "I couldn't send timeline updates to "+userAccount.getGtalkId());
+					ExceptionPrinter.print(System.out, e, "I couldn't send timeline updates to "+userAccount.getGtalkId());
 				}
 			}
 		}
