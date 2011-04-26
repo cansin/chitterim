@@ -26,7 +26,7 @@ import com.google.appengine.api.xmpp.XMPPService;
 import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
 @SuppressWarnings("serial")
-public class XmppServlet extends HttpServlet {
+public class XmppMessageServlet extends HttpServlet {
 	private static final XMPPService xmppService =
 		XMPPServiceFactory.getXMPPService();
 		
@@ -108,9 +108,9 @@ public class XmppServlet extends HttpServlet {
 			
 			strategy.handleMessage(userAccount, message);
 		} catch (IOException e) {
-			ExceptionPrinter.print(System.err, e, "IOException at xmppService.parseMessage(request)");
+			ExceptionPrinter.print(System.err, e, "IOException at xmppMessage.parseMessage(request)");
 		} catch (IllegalArgumentException e) {
-			ExceptionPrinter.print(System.err, e, "IllegalArgumentException at xmppService.parseMessage(request)");
+			ExceptionPrinter.print(System.out, e, "IllegalArgumentException at xmppMessage.parseMessage(request)");
 		}
 	}
 	

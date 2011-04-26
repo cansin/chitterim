@@ -5,13 +5,26 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-	   <servlet-name>xmppreceiver</servlet-name>
-	   <servlet-class>com.chitter.bot.XmppServlet</servlet-class>
-	 </servlet>
-	 <servlet-mapping>
-	   <servlet-name>xmppreceiver</servlet-name>
-	   <url-pattern>/_ah/xmpp/message/chat/</url-pattern>
-	 </servlet-mapping>
+	  <servlet-name>xmppmessage</servlet-name>
+	  <servlet-class>com.chitter.bot.XmppMessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>xmppmessage</servlet-name>
+	  <url-pattern>/_ah/xmpp/message/chat/</url-pattern>
+	</servlet-mapping>
+	 	 
+	<servlet>
+	  <servlet-name>xmpppresence</servlet-name>
+	  <servlet-class>com.chitter.bot.XmppPresenceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>xmpppresence</servlet-name>
+	  <url-pattern>/_ah/xmpp/presence/unavailable/</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	  <servlet-name>xmpppresence</servlet-name>
+	  <url-pattern>/_ah/xmpp/presence/available/</url-pattern>
+	</servlet-mapping>
 	 
      <servlet>
        <servlet-name>login</servlet-name>

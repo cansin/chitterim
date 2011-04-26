@@ -1,9 +1,7 @@
 package com.chitter.bot;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
@@ -26,7 +24,6 @@ import com.google.appengine.api.xmpp.JID;
 import com.google.appengine.api.xmpp.Message;
 import com.google.appengine.api.xmpp.MessageBuilder;
 import com.google.appengine.api.xmpp.MessageType;
-import com.google.appengine.api.xmpp.Presence;
 import com.google.appengine.api.xmpp.XMPPService;
 import com.google.appengine.api.xmpp.XMPPServiceFactory;
 
@@ -51,14 +48,12 @@ public class StreamCronjobServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		
-		List<UserAccount> userAccounts = new ArrayList<UserAccount>();
-		userAccounts.addAll(UserAccount.getUserAccountList()); 
-		Iterator<UserAccount> it = userAccounts.iterator();
+		List<UserAccount> userAccounts = UserAccount.getTimelineActiveAndOnlineUsers();
+		userAccounts.size();
 		
-		while(it.hasNext()){
-			UserAccount userAccount = it.next();
-			Presence presence=xmppService.getPresence(new JID(userAccount.getGtalkId()));
-			if(presence.isAvailable() && userAccount.getIsTimelineActive()) {
+		for(UserAccount userAccount: userAccounts){
+			//Presence presence=xmppService.getPresence(new JID(userAccount.getGtalkId()));
+			//if(presence.isAvailable() && userAccount.getIsTimelineActive()) {
 				//queue.add(Builder.withUrl("/stream-task?gtalkId="+userAccount.getGtalkId()+
 				//						"&accessToken="+userAccount.getTwitterAccessToken()+
 				//						"&accessTokenSecret="+userAccount.getTwitterAccessTokenSecret())
@@ -68,7 +63,7 @@ public class StreamCronjobServlet extends HttpServlet {
 				} catch (TwitterException e) {
 					ExceptionPrinter.print(System.out, e, "I couldn't send timeline updates to "+userAccount.getGtalkId());
 				}
-			}
+			//}
 		}
 	}
 	

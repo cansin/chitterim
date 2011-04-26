@@ -37,16 +37,17 @@ public class TwitterServlet extends HttpServlet {
 		//if(request.getServerName().equals("chitterim.appspot.com")) response.sendRedirect("http://www.chitter.im");
 
 		AbstractState state = (AbstractState)request.getSession().getAttribute("state");
-		if(state.getClass().equals(TwitterAuthState.class)) {
+		
+		if(state != null && state.getClass().equals(TwitterAuthState.class)) {
 			state = new BotInvitationState();
 			request.getSession().setAttribute("state", state);
-		} else if(state.getClass().equals(TwitterReauthState.class)) {
+		} else if(state != null && state.getClass().equals(TwitterReauthState.class)) {
 			state = new BotInvitationState();
 			request.getSession().setAttribute("state", state);
 			state.processRequest(request, response);
 			state = new LoggedInState();
 			request.getSession().setAttribute("state", state);
-		} else if(state.getClass().equals(LoggedInState.class)) {
+		} else if(state != null && state.getClass().equals(LoggedInState.class)) {
 			state = new BotInvitationState();
 			request.getSession().setAttribute("state", state);
 			state.processRequest(request, response);

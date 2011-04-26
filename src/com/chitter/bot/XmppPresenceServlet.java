@@ -1,0 +1,59 @@
+package com.chitter.bot;
+
+import java.io.IOException;
+import java.util.Collections;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jsr107cache.Cache;
+import net.sf.jsr107cache.CacheException;
+import net.sf.jsr107cache.CacheManager;
+
+import com.chitter.persistence.UserAccount;
+import com.chitter.utility.ExceptionPrinter;
+import com.google.appengine.api.xmpp.Presence;
+import com.google.appengine.api.xmpp.XMPPService;
+import com.google.appengine.api.xmpp.XMPPServiceFactory;
+
+@SuppressWarnings("serial")
+public class XmppPresenceServlet extends HttpServlet {
+	private static final XMPPService xmppService =
+		XMPPServiceFactory.getXMPPService();
+	
+	private static CacheManager cacheManager = CacheManager.getInstance();
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+		processRequest(request,response);
+	}
+	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+		processRequest(request,response);
+	}
+
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			// Get Cache
+			Cache cache = cacheManager.getCacheFactory().createCache(Collections.emptyMap());
+			// Parse Incoming Presence
+			Presence presence = xmppService.parsePresence(request);
+			// Parse Gtalk Id
+			String from = presence.getFromJid().getId().split("/")[0];
+			// Look if we already got a cache hit
+			Boolean isAvailable = (Boolean) cache.peek(from);
+			if(isAvailable == null || presence.isAvailable() != isAvailable) {
+				// If incoming value is different than the cache
+				// Update both cache and database
+				cache.put(from, presence.isAvailable());
+				UserAccount user = new UserAccount(from);
+				user.setOnline(presence.isAvailable());
+			}
+		} catch (CacheException e) {
+			ExceptionPrinter.print(System.err,e,"Couldn't create cache at XmppPresence");
+		} catch (IOException e) {
+			ExceptionPrinter.print(System.err,e,"IOException at XmppPresence");
+		}
+	}
+	
+}
