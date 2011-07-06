@@ -25,6 +25,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	  <servlet-name>xmpppresence</servlet-name>
 	  <url-pattern>/_ah/xmpp/presence/available/</url-pattern>
 	</servlet-mapping>
+	 	 
+	<servlet>
+	  <servlet-name>xmppprobe</servlet-name>
+	  <servlet-class>com.chitter.bot.XmppProbeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>xmppprobe</servlet-name>
+	  <url-pattern>/_ah/xmpp/presence/probe/</url-pattern>
+	</servlet-mapping>
 	 
      <servlet>
        <servlet-name>login</servlet-name>

@@ -44,7 +44,6 @@ public aspect Persistence {
 	}
 
 	@SuppressWarnings("all")
-	// TODO Don't Forget to implement this
 	public static List UserAccount.getTimelineActiveAndOnlineUsers(){
 		PersistenceManager pm = getPM();
 		
@@ -58,7 +57,6 @@ public aspect Persistence {
 	}
 	
 	@SuppressWarnings("all")
-	// TODO Don't Forget to implement this
 	public static List UserAccount.getTimelineActiveUsers(){
 		PersistenceManager pm = getPM();
 		
@@ -72,7 +70,6 @@ public aspect Persistence {
 	}
 	
 	@SuppressWarnings("all")
-	// TODO Don't Forget to implement this
 	public static List UserAccount.getOnlineUsers(){
 		PersistenceManager pm = getPM();
 		
@@ -118,20 +115,18 @@ public aspect Persistence {
     
     after(Object o) : pushObject(o) && !withinEscapePersistence(){
     	PersistenceManager pm = getPM();
-    	try{
-    		/**
-    		 * First try to convert object to UserStatistic.
-    		 * If you can, that means the persistent object was UserStatistic,
-    		 * so you should flag statistics array as dirty.
-    		 * (o.w. it will not persist changes to the array.)
-    		 */
+		/**
+		 * First try to convert object to UserStatistic.
+		 * If you can, that means the persistent object was UserStatistic,
+		 * so you should flag statistics array as dirty.
+		 * (o.w. it will not persist changes to the array.)
+		 */
+		if(o.getClass().equals(UserStatistic.class)) {
     		UserStatistic statistic=(UserStatistic) o;
     		JDOHelper.makeDirty(statistic, "statistics");
-    	} catch(Exception e) {
-    	} finally {
-        	pm.makePersistent(o.getClass().cast(o));
-    		pm.flush();
-    	}
+		}
+    	pm.makePersistent(o.getClass().cast(o));
+		pm.flush();
     }    
     
     @SuppressWarnings("all")

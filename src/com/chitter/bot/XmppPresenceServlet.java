@@ -32,14 +32,14 @@ public class XmppPresenceServlet extends HttpServlet {
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-		
+		String from = "";
 		try {
 			// Get Cache
 			Cache cache = cacheManager.getCacheFactory().createCache(Collections.emptyMap());
 			// Parse Incoming Presence
 			Presence presence = xmppService.parsePresence(request);
 			// Parse Gtalk Id
-			String from = presence.getFromJid().getId().split("/")[0];
+			from = presence.getFromJid().getId().split("/")[0];
 			// Look if we already got a cache hit
 			Boolean isAvailable = (Boolean) cache.peek(from);
 			if(isAvailable == null || presence.isAvailable() != isAvailable) {
@@ -47,12 +47,14 @@ public class XmppPresenceServlet extends HttpServlet {
 				// Update both cache and database
 				cache.put(from, presence.isAvailable());
 				UserAccount user = new UserAccount(from);
-				user.setOnline(presence.isAvailable());
+				if(user != null) user.setOnline(presence.isAvailable());
 			}
 		} catch (CacheException e) {
-			ExceptionPrinter.print(System.err,e,"Couldn't create cache at XmppPresence");
+			ExceptionPrinter.print(System.err,e,"Couldn't create cache at XmppPresence "+from);
 		} catch (IOException e) {
-			ExceptionPrinter.print(System.err,e,"IOException at XmppPresence");
+			ExceptionPrinter.print(System.err,e,"IOException at XmppPresence "+from);
+		} catch (Exception e) {
+			ExceptionPrinter.print(System.err,e,"Unknown error at XmppPresence for user "+from);
 		}
 	}
 	
