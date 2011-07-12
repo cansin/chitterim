@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -85,12 +84,17 @@ public class BotInvitationState extends AbstractState {
 				 */
 				long ttSinceId = 1;
 				long dmSinceId = 1;
-				ResponseList<twitter4j.Status> tts=twitter.getFriendsTimeline();
+				ResponseList<twitter4j.Status> tts=twitter.getHomeTimeline();
+				/*
 				ResponseList<DirectMessage> dms=twitter.getDirectMessages();
+				*/
+				
 				if(tts.size()>1)
 					ttSinceId = tts.get(1).getId();
+				/*
 				if(dms.size()>1)
 					dmSinceId = dms.get(1).getId();
+				*/
 				new UserTwitterTimeline(user.getEmail().toLowerCase(), ttSinceId, dmSinceId);
 					 
 			} catch(Exception e) {

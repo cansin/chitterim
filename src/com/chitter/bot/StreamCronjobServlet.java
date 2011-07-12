@@ -1,15 +1,11 @@
 package com.chitter.bot;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.SimpleTimeZone;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import twitter4j.DirectMessage;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -47,6 +43,7 @@ public class StreamCronjobServlet extends HttpServlet {
 	
 	@SuppressWarnings("unchecked")
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Will start stream cronjob process");
 		
 		List<UserAccount> userAccounts = UserAccount.getTimelineActiveAndOnlineUsers();
 		userAccounts.size();
@@ -59,12 +56,15 @@ public class StreamCronjobServlet extends HttpServlet {
 				//						"&accessTokenSecret="+userAccount.getTwitterAccessTokenSecret())
 				//						.method(Method.GET));
 				try {
+					System.err.println("trying to send timeline update to "+userAccount.getGtalkId());
 					sendTimelineUpdates(userAccount.getGtalkId(),userAccount.getTwitterAccessToken(),userAccount.getTwitterAccessTokenSecret());
 				} catch (TwitterException e) {
 					ExceptionPrinter.print(System.out, e, "I couldn't send timeline updates to "+userAccount.getGtalkId());
 				}
 			//}
 		}
+		
+		System.out.println("Done");
 	}
 	
 	public static void sendTimelineUpdates(String gtalkId, String accessToken, String accessTokenSecret) throws TwitterException {
@@ -78,11 +78,15 @@ public class StreamCronjobServlet extends HttpServlet {
 		if(dmSinceId!=null && ttSinceId !=null && gtalkId != null && accessToken != null && accessTokenSecret != null){
 			System.out.println("started");
 			Twitter twitter = TwitterAPI.getInstanceFor(accessToken, accessTokenSecret);
-			System.out.println("Twitter authentication is set.");
+			System.out.println("Twitter authentication is set for "+twitter.getScreenName()+". ");
 			
-			ResponseList<Status> timeline = twitter.getFriendsTimeline(new Paging(ttSinceId));
+			ResponseList<Status> timeline = twitter.getHomeTimeline(new Paging(ttSinceId));
+			System.out.println("Timeline fetched for "+ twitter.getScreenName()+ " with sizes "+timeline.size());
+			
+			/*
 			ResponseList<DirectMessage> directMessages = twitter.getDirectMessages(new Paging((long)dmSinceId));
-			System.out.println("Lists are fetched for "+ twitter.getScreenName()+ " with sizes "+timeline.size()+" "+directMessages.size());
+			System.out.println("Direct messages fetched for "+ twitter.getScreenName()+ " with sizes "+directMessages.size());
+			*/
 			
 			for(int i=timeline.size()-1;i>=0;i--){
 				System.out.println("Trying to get "+i+"th wall post.");
@@ -104,6 +108,8 @@ public class StreamCronjobServlet extends HttpServlet {
 					xmppService.sendMessage(message);
 				}
 			}
+			
+			/*
 			SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM.yyyy HH:mm");
 			SimpleTimeZone timeZone = new SimpleTimeZone(twitter.showUser(twitter.getId()).getUtcOffset()*1000+60*60*1000,"UTC");
 			formatter.setTimeZone(timeZone);
@@ -124,16 +130,20 @@ public class StreamCronjobServlet extends HttpServlet {
 
 				xmppService.sendMessage(message);
 			}
+			*/
 			
 			boolean isSinceIdsChanged = false;
 			if(timeline.size()>0) {
 				ttSinceId=timeline.get(0).getId();
 				isSinceIdsChanged = true;
 			}
+			
+			/*
 			if(directMessages.size()>0) {
 				dmSinceId=directMessages.get(0).getId();
 				isSinceIdsChanged = true;
 			}
+			*/
 
 			if(isSinceIdsChanged){
 				new UserTwitterTimeline(gtalkId, ttSinceId, dmSinceId);
