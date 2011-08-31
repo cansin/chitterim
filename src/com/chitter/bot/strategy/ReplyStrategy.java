@@ -1,5 +1,6 @@
 package com.chitter.bot.strategy;
 
+import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
@@ -8,7 +9,7 @@ import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
 import com.google.appengine.api.xmpp.Message;
 
-public class DirectMessageStrategy extends AbstractStrategy {
+public class ReplyStrategy extends AbstractStrategy {
 
 	@Override
 	public void handleMessage(UserAccount userAccount, Message message) {
@@ -18,16 +19,18 @@ public class DirectMessageStrategy extends AbstractStrategy {
 
 		Twitter twitter = TwitterAPI.getInstanceFor(userAccount);
 		try {
-			messageBody = BitlyAPI.shortenUrls(messageBody);
+			messageBody = "@"+receiverScreenName+" "+BitlyAPI.shortenUrls(messageBody);
 			if(twitter.existsFriendship(receiverScreenName,twitter.getScreenName())){
 				if(messageBody.length()<140) {
-					twitter.sendDirectMessage(receiverScreenName, messageBody);
-					replyToMessage(message, "You sent direct message to _*" + receiverScreenName +"*_.");
+					StatusUpdate statusUpdate=new StatusUpdate(messageBody);
+					statusUpdate.setInReplyToStatusId(twitter.getUserTimeline(receiverScreenName).get(0).getId());
+					twitter.updateStatus(statusUpdate);
+					replyToMessage(message, "You sent reply to _*" + receiverScreenName +"*_ 's last status.");
 				} else {
 					replyToMessage(message, "Your message has "+(messageBody.length()-140)+" extra characters.");
 				}
 			} else {
-				replyToMessage(message, "You cannot send direct message to _*" + receiverScreenName +"*_.");
+				replyToMessage(message, "You cannot reply to _*" + receiverScreenName +"*_ 's status.");
 			}
 		} catch(TwitterException e) {
 			/**

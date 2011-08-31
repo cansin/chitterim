@@ -1,10 +1,13 @@
 package com.chitter.web;
 
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chitter.persistence.UserAccount;
 import com.chitter.persistence.UserStatistic;
 import com.chitter.utility.ExceptionPrinter;
 import com.google.appengine.api.xmpp.XMPPService;
@@ -24,10 +27,16 @@ public class AnalyticsServlet extends HttpServlet {
 		processRequest(request,response);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		String type=request.getParameter("type");
 		if(type==null || type.isEmpty()) {
-			;
+			List<UserAccount> timelineActiveAndOnlineUsers = UserAccount.getTimelineActiveAndOnlineUsers();
+			List<UserAccount> timelineActiveUsers = UserAccount.getTimelineActiveUsers();
+			List<UserAccount> users = UserAccount.getUserAccountList();
+			request.setAttribute("timelineActiveAndOnlineUsers", timelineActiveAndOnlineUsers);
+			request.setAttribute("timelineActiveUsers", timelineActiveUsers);
+			request.setAttribute("users", users);
 		} else if(type.equals("min")){
 			request.setAttribute("analytic", UserStatistic.getMinAnalytic());
 		} else if (type.equals("max")){

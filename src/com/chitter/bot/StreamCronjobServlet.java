@@ -49,19 +49,11 @@ public class StreamCronjobServlet extends HttpServlet {
 		userAccounts.size();
 		
 		for(UserAccount userAccount: userAccounts){
-			//Presence presence=xmppService.getPresence(new JID(userAccount.getGtalkId()));
-			//if(presence.isAvailable() && userAccount.getIsTimelineActive()) {
-				//queue.add(Builder.withUrl("/stream-task?gtalkId="+userAccount.getGtalkId()+
-				//						"&accessToken="+userAccount.getTwitterAccessToken()+
-				//						"&accessTokenSecret="+userAccount.getTwitterAccessTokenSecret())
-				//						.method(Method.GET));
-				try {
-					System.err.println("trying to send timeline update to "+userAccount.getGtalkId());
-					sendTimelineUpdates(userAccount.getGtalkId(),userAccount.getTwitterAccessToken(),userAccount.getTwitterAccessTokenSecret());
-				} catch (TwitterException e) {
-					ExceptionPrinter.print(System.out, e, "I couldn't send timeline updates to "+userAccount.getGtalkId());
-				}
-			//}
+			try {
+				sendTimelineUpdates(userAccount.getGtalkId(),userAccount.getTwitterAccessToken(),userAccount.getTwitterAccessTokenSecret());
+			} catch (TwitterException e) {
+				ExceptionPrinter.print(System.out, e, "I couldn't send timeline updates to "+userAccount.getGtalkId());
+			}
 		}
 		
 		System.out.println("Done");
@@ -94,15 +86,30 @@ public class StreamCronjobServlet extends HttpServlet {
 				System.out.println("Yes, we're in");
 				if(!status.getUser().getScreenName().equals(twitter.getScreenName())) {
 					String messageBody = "_*" +status.getUser().getScreenName()+ ":*_ ";
+					String messageBodyHTML = "<p><b><i>" +status.getUser().getScreenName()+ ":</i></b> ";
 					if(status.isRetweet()) {
 						messageBody += "_rt_ _"+status.getRetweetedStatus().getUser().getScreenName()+"_: " +status.getRetweetedStatus().getText();
+						messageBodyHTML += "<i>rt</i> <i>"+status.getRetweetedStatus().getUser().getScreenName()+"</i>: " +status.getRetweetedStatus().getText()+"</p>";
 					} else {
 						messageBody += status.getText();
+						messageBodyHTML += status.getText() + "</p>";
 					}
+					
+					String fullMessageBody = messageBody;
+//								"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+//							   + "<body>"+ messageBody +"</body>"
+//							   + "<html xmlns='http://jabber.org/protocol/xhtml-im'>"
+//							   + "<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/></head>"
+//							   + "<body xmlns='http://www.w3.org/1999/xhtml'>"
+//							   + messageBodyHTML
+//							   + "</body>"
+//							   + "</html>";
+					
 					Message message = messageBuilder
 					.withRecipientJids(new JID(gtalkId))
 					.withMessageType(MessageType.CHAT)
-					.withBody(messageBody)
+					.withBody(fullMessageBody)
+					//.asXml(true)
 					.build();
 
 					xmppService.sendMessage(message);

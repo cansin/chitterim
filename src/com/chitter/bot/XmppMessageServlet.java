@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chitter.bot.strategy.AbstractStrategy;
 import com.chitter.bot.strategy.DirectMessageStrategy;
+import com.chitter.bot.strategy.FavoriteStrategy;
 import com.chitter.bot.strategy.FollowStrategy;
 import com.chitter.bot.strategy.HelpStrategy;
 import com.chitter.bot.strategy.IncomingFriendshipStrategy;
 import com.chitter.bot.strategy.QuoteStrategy;
+import com.chitter.bot.strategy.ReplyStrategy;
 import com.chitter.bot.strategy.RetweetStrategy;
 import com.chitter.bot.strategy.SubscribeStrategy;
 import com.chitter.bot.strategy.TimelineOffStrategy;
@@ -64,6 +66,16 @@ public class XmppMessageServlet extends HttpServlet {
 						message.getBody().startsWith(".retweet ") ||
 						message.getBody().startsWith(".rt ") ) {
 					strategy=new RetweetStrategy();
+				} else if (message.getBody().startsWith("/favorite ") ||
+						message.getBody().startsWith("/fav ") ||
+						message.getBody().startsWith(".favorite ") ||
+						message.getBody().startsWith(".fav ") ) {
+					strategy=new FavoriteStrategy();
+				} else if (message.getBody().startsWith("/reply ") ||
+						message.getBody().startsWith("/r ") ||
+						message.getBody().startsWith(".reply ") ||
+						message.getBody().startsWith(".r ") ) {
+					strategy=new ReplyStrategy();
 				} else if (message.getBody().startsWith("/follow ") ||
 						message.getBody().startsWith("/f ") ||
 						message.getBody().startsWith(".follow ") ||

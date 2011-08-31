@@ -1,5 +1,7 @@
 <%@page import="com.chitter.persistence.UserStatistic" %>
+<%@page import="com.chitter.persistence.UserAccount" %>
 <%@page import="java.util.Arrays" %>
+<%@page import="java.util.List" %>
 <%
 	UserStatistic analytic = (UserStatistic)request.getAttribute("analytic");
 %>
@@ -63,7 +65,19 @@
 		<h1>Analytics result for <%= analytic.getGtalkId() %> </h1>
 		<img src=<%= imgSrc %> alt="chart"/>
 	<% } else { %>
-		<h1> Welcome to analytics. </h1>
+			<%
+				@SuppressWarnings("unchecked")
+				List<UserAccount> timelineActiveAndOnlineUsers = (List<UserAccount>)request.getAttribute("timelineActiveAndOnlineUsers");
+				@SuppressWarnings("unchecked")
+				List<UserAccount> timelineActiveUsers = (List<UserAccount>)request.getAttribute("timelineActiveUsers");
+				@SuppressWarnings("unchecked")
+				List<UserAccount> users = (List<UserAccount>)request.getAttribute("users");
+			%>
+			<h1> Welcome to analytics. </h1>
+			<p> <b>User Count:</b> <%=users.size()%></p>
+			<p> <b>TimelineActive User Count:</b> <%=timelineActiveUsers.size()%></p>
+			<p> <b>TimelineActive And Online User Count:</b> <%=timelineActiveAndOnlineUsers.size()%></p>
+		
 	<% } %>
 	
 </div>
