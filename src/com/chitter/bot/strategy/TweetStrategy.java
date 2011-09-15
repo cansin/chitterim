@@ -22,9 +22,13 @@ public class TweetStrategy extends AbstractStrategy {
 		 * tweet will be sent as in reply to cansinyildiz's 
 		 * last tweet.
 		 */
-		String receiverScreenName = messageBody.substring(0, messageBody.indexOf(' ')).trim();
-		
-		if(receiverScreenName.charAt(0)=='@') {
+		String receiverScreenName;
+		if(messageBody.indexOf(' ')>0) {
+			receiverScreenName = messageBody.substring(0, messageBody.indexOf(' ')).trim();
+		} else {
+			receiverScreenName = messageBody.substring(0, messageBody.length()).trim();
+		}
+		if(!receiverScreenName.isEmpty() && receiverScreenName.charAt(0)=='@') {
 			receiverScreenName = receiverScreenName.substring(1,receiverScreenName.length()).trim();
 		} else {
 			receiverScreenName = "";
