@@ -1,5 +1,6 @@
 package com.chitter.persistence;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.jdo.annotations.PersistenceCapable;
@@ -7,7 +8,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
-public class UserStatistic {
+public class UserStatistic implements Serializable {
+	private static final long serialVersionUID = 3L;
 
 	public static final String[] statisticsLabels = {
 		"Direct Message","Follow","Help","Incoming Friendship","Retweet","Subscribe",

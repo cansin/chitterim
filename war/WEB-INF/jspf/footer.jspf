@@ -12,7 +12,7 @@
 				new TWTR.Widget({
 				  version: 2,
 				  type: 'search',
-				  search: '@chitterim OR chitterim OR chitter.im OR "chitter im" -ed0h7C -from:cansinyildiz -from:chitterim',
+				  search: '@chitterim OR chitterim OR chitter.im OR "chitter im" -"I started using" -from:cansinyildiz -from:chitterim',
 				  interval: 5000,
 				  title: 'What people say about Chitter.im',
 				  width: 370,

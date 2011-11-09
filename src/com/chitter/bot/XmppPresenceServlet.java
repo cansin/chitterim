@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jsr107cache.Cache;
 import net.sf.jsr107cache.CacheException;
+import net.sf.jsr107cache.CacheFactory;
 import net.sf.jsr107cache.CacheManager;
 
 import com.chitter.persistence.UserAccount;
@@ -20,9 +21,20 @@ import com.google.appengine.api.xmpp.XMPPServiceFactory;
 @SuppressWarnings("serial")
 public class XmppPresenceServlet extends HttpServlet {
 	private static final XMPPService xmppService =
-		XMPPServiceFactory.getXMPPService();
-	
-	private static CacheManager cacheManager = CacheManager.getInstance();
+			XMPPServiceFactory.getXMPPService();
+
+	private static Cache cache;
+	static
+	{
+		try
+		{
+			CacheManager cacheManager = CacheManager.getInstance();
+			CacheFactory cacheFactory = cacheManager.getCacheFactory();
+			cache = cacheFactory.createCache(Collections.EMPTY_MAP);
+		} catch (CacheException e) {
+			ExceptionPrinter.print(System.err, e, "Couldn't create cache at XmppPresence");
+		}
+	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		processRequest(request,response);
@@ -34,8 +46,6 @@ public class XmppPresenceServlet extends HttpServlet {
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		String from = "";
 		try {
-			// Get Cache
-			Cache cache = cacheManager.getCacheFactory().createCache(Collections.emptyMap());
 			// Parse Incoming Presence
 			Presence presence = xmppService.parsePresence(request);
 			// Parse Gtalk Id
@@ -49,13 +59,11 @@ public class XmppPresenceServlet extends HttpServlet {
 				UserAccount user = new UserAccount(from);
 				if(user != null) user.setOnline(presence.isAvailable());
 			}
-		} catch (CacheException e) {
-			ExceptionPrinter.print(System.err,e,"Couldn't create cache at XmppPresence "+from);
 		} catch (IOException e) {
 			ExceptionPrinter.print(System.err,e,"IOException at XmppPresence "+from);
 		} catch (Exception e) {
 			ExceptionPrinter.print(System.err,e,"Unknown error at XmppPresence for user "+from);
 		}
 	}
-	
+
 }

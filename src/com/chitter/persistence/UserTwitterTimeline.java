@@ -1,12 +1,15 @@
 package com.chitter.persistence;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 
 @PersistenceCapable
-public class UserTwitterTimeline {
+public class UserTwitterTimeline implements Serializable {
+	private static final long serialVersionUID = 4L;
 	@PrimaryKey
 	@Persistent
 	private String gtalkId;

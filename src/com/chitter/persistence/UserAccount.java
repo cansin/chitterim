@@ -1,12 +1,15 @@
 package com.chitter.persistence;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 
 @PersistenceCapable
-public class UserAccount {
+public class UserAccount implements Serializable {
+	private static final long serialVersionUID = 2L;
 	@PrimaryKey
 	@Persistent
 	private String gtalkId;

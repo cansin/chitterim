@@ -1,5 +1,7 @@
 package com.chitter.persistence;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -9,7 +11,9 @@ import com.google.appengine.api.datastore.Key;
 
 
 @PersistenceCapable
-public class Announcement {
+public class Announcement implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public enum Category {HowTo, DidYouKnowThat, NewFeature};
 	
     @PrimaryKey
