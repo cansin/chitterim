@@ -160,6 +160,7 @@ public aspect Persistence {
 			}
 			return r;
 		} catch (Exception e) {
+			cache.remove(thisJoinPointStaticPart.getSignature().getDeclaringTypeName() + "_" + pk);
 			ExceptionPrinter.print(System.err, e, "I couldn't fetch persistent object for " + 
 					thisJoinPointStaticPart.getSignature().getDeclaringTypeName() + " " + pk);
 			return null;
