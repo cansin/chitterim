@@ -2,8 +2,8 @@
 <cronentries>
   <cron>
     <url>/stream-cronjob</url>
-    <description>Fetch Twitter streams of online users every 1 minute</description>
-    <schedule>every 1 minutes</schedule>
+    <description>Fetch Twitter streams of online users every 10 minute</description>
+    <schedule>every 10 minutes</schedule>
   </cron>
   <cron>
     <url>/announce-cronjob</url>

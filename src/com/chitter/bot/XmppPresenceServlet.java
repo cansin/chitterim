@@ -1,6 +1,5 @@
 package com.chitter.bot;
 
-import java.io.IOException;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServlet;
@@ -59,8 +58,6 @@ public class XmppPresenceServlet extends HttpServlet {
 				UserAccount user = new UserAccount(from);
 				if(user != null) user.setOnline(presence.isAvailable());
 			}
-		} catch (IOException e) {
-			ExceptionPrinter.print(System.err,e,"IOException at XmppPresence "+from);
 		} catch (Exception e) {
 			ExceptionPrinter.print(System.err,e,"Unknown error at XmppPresence for user "+from);
 		}

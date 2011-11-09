@@ -72,15 +72,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
 	 
      <servlet>
-       <servlet-name>stream-task</servlet-name>
-       <servlet-class>com.chitter.bot.StreamTaskServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>stream-task</servlet-name>
-        <url-pattern>/stream-task</url-pattern>
-    </servlet-mapping>
-	 
-     <servlet>
        <servlet-name>announce-cronjob</servlet-name>
        <servlet-class>com.chitter.bot.AnnounceCronjobServlet</servlet-class>
     </servlet>
