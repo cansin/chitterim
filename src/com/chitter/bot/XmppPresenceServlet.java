@@ -1,6 +1,8 @@
 package com.chitter.bot;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,6 @@ import net.sf.jsr107cache.CacheException;
 import net.sf.jsr107cache.CacheFactory;
 import net.sf.jsr107cache.CacheManager;
 
-import com.chitter.persistence.UserAccount;
 import com.chitter.utility.ExceptionPrinter;
 import com.google.appengine.api.xmpp.Presence;
 import com.google.appengine.api.xmpp.XMPPService;
@@ -47,17 +48,21 @@ public class XmppPresenceServlet extends HttpServlet {
 		try {
 			// Parse Incoming Presence
 			Presence presence = xmppService.parsePresence(request);
+			Boolean isAvailable = presence.isAvailable();
 			// Parse Gtalk Id
 			from = presence.getFromJid().getId().split("/")[0];
-			// Look if we already got a cache hit
-			Boolean isAvailable = (Boolean) cache.peek(from);
-			if(isAvailable == null || presence.isAvailable() != isAvailable) {
-				// If incoming value is different than the cache
-				// Update both cache and database
-				cache.put(from, presence.isAvailable());
-				UserAccount user = new UserAccount(from);
-				if(user != null) user.setOnline(presence.isAvailable());
+			@SuppressWarnings("unchecked")
+			HashSet<String> onlineUserGtalkIdsSet = (HashSet<String>) cache.peek("onlineUserGtalkIdsSet");
+			if (onlineUserGtalkIdsSet == null) {
+				onlineUserGtalkIdsSet = new HashSet<String>();
+				cache.put("onlineUserGtalkIdsSet",onlineUserGtalkIdsSet);
 			}
+			if(isAvailable) {
+				onlineUserGtalkIdsSet.add(from);
+			} else {
+				onlineUserGtalkIdsSet.remove(from);
+			}
+			cache.put("onlineUserGtalkIdsSet", onlineUserGtalkIdsSet);
 		} catch (Exception e) {
 			ExceptionPrinter.print(System.err,e,"Unknown error at XmppPresence for user "+from);
 		}
