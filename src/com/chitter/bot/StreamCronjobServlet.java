@@ -69,7 +69,7 @@ public class StreamCronjobServlet extends HttpServlet {
 		for(String onlineUserGtalkId: onlineUserGtalkIdsSet){
 			try {
 				sendTimelineUpdates(onlineUserGtalkId);
-			} catch (TwitterException e) {
+			} catch (Exception e) {
 				ExceptionPrinter.print(System.out, e, "I couldn't send timeline updates to "+onlineUserGtalkId);
 			}
 		}
@@ -79,7 +79,7 @@ public class StreamCronjobServlet extends HttpServlet {
 
 	public static void sendTimelineUpdates(String gtalkId) throws TwitterException {
 		UserAccount userAccount = new UserAccount(gtalkId);
-		if(userAccount.getIsTimelineActive()) {
+		if(userAccount!=null && userAccount.getIsTimelineActive()) {
 			UserTwitterTimeline userTT = new UserTwitterTimeline(gtalkId);
 			Long ttSinceId = userTT.getTwitterTimelineSinceId();
 			Long dmSinceId = userTT.getTwitterDirectMessageSinceId();
