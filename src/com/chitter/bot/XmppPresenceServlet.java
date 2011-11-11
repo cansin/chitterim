@@ -1,6 +1,5 @@
 package com.chitter.bot;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 

@@ -25,16 +25,12 @@ public class UserAccount implements Serializable {
 
 	@Persistent
 	private Boolean isTimelineActive;
-	
-	@Persistent
-	private Boolean isOnline;
 
 	public UserAccount(String gtalkId, String twitterAccessToken, String twitterAccessTokenSecret){
 		this.gtalkId=gtalkId.toLowerCase();
 		this.twitterAccessToken=twitterAccessToken;
 		this.twitterAccessTokenSecret=twitterAccessTokenSecret;
 		this.isTimelineActive=true;
-		this.isOnline=true;
 	}
 
 	public UserAccount(String gtalkId){
@@ -75,21 +71,12 @@ public class UserAccount implements Serializable {
 	public Boolean getIsTimelineActive() {
 		return isTimelineActive;
 	}
-	
-	public void setOnline(Boolean isOnline) {
-		this.isOnline = isOnline;
-	}
-
-	public Boolean isOnline() {
-		return isOnline;
-	}
 
 	@Override
 	public String toString() {
 		return "UserAccount [gtalkId=" + gtalkId + ", twitterAccessToken="
 				+ twitterAccessToken + ", twitterAccessTokenSecret="
 				+ twitterAccessTokenSecret + ", isTimelineActive="
-				+ isTimelineActive + ", isOnline="
-				+ isOnline + "]";
+				+ isTimelineActive + "]";
 	}
 }

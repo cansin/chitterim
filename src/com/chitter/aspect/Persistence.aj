@@ -2,7 +2,9 @@ package com.chitter.aspect;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
@@ -61,20 +63,17 @@ public aspect Persistence {
 	public static List UserAccount.getUserAccountList(){
 		return new ArrayList<UserAccount>();
 	}
-
+	
 	@SuppressWarnings("all")
-	public static List UserAccount.getTimelineActiveAndOnlineUsers(){
-		PersistenceManager pm = getPM();
-
-		try {
-			Query q = pm.newQuery(UserAccount.class, "this.isTimelineActive == true && this.isOnline == true");
-			return (List) q.execute();
-		} catch (Exception e) {
-			ExceptionPrinter.print(System.err,e,"I couldn't fetch timeline active and online users");
-			return (List)(new ArrayList<Object>());
-		} 
+	public static Set<String> UserAccount.getOnlineUserGtalkIds(){
+		HashSet<String> onlineUserGtalkIdsSet = (HashSet<String>) cache.peek("onlineUserGtalkIdsSet");
+		if (onlineUserGtalkIdsSet == null) {
+			onlineUserGtalkIdsSet = new HashSet<String>();
+			cache.put("onlineUserGtalkIdsSet",onlineUserGtalkIdsSet);
+		}
+		return onlineUserGtalkIdsSet;
 	}
-
+	
 	@SuppressWarnings("all")
 	public static List UserAccount.getTimelineActiveUsers(){
 		PersistenceManager pm = getPM();

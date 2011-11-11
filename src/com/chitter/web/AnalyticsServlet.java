@@ -1,6 +1,7 @@
 package com.chitter.web;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
@@ -31,10 +32,10 @@ public class AnalyticsServlet extends HttpServlet {
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		String type=request.getParameter("type");
 		if(type==null || type.isEmpty()) {
-			List<UserAccount> timelineActiveAndOnlineUsers = UserAccount.getTimelineActiveAndOnlineUsers();
+			Set<String> onlineUsers = UserAccount.getOnlineUserGtalkIds();
 			List<UserAccount> timelineActiveUsers = UserAccount.getTimelineActiveUsers();
 			List<UserAccount> users = UserAccount.getUserAccountList();
-			request.setAttribute("timelineActiveAndOnlineUsers", timelineActiveAndOnlineUsers);
+			request.setAttribute("onlineUsers", onlineUsers);
 			request.setAttribute("timelineActiveUsers", timelineActiveUsers);
 			request.setAttribute("users", users);
 		} else if(type.equals("min")){

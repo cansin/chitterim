@@ -2,6 +2,7 @@
 <%@page import="com.chitter.persistence.UserAccount" %>
 <%@page import="java.util.Arrays" %>
 <%@page import="java.util.List" %>
+<%@page import="java.util.Set" %>
 <%
 	UserStatistic analytic = (UserStatistic)request.getAttribute("analytic");
 %>
@@ -67,7 +68,7 @@
 	<% } else { %>
 			<%
 				@SuppressWarnings("unchecked")
-				List<UserAccount> timelineActiveAndOnlineUsers = (List<UserAccount>)request.getAttribute("timelineActiveAndOnlineUsers");
+				Set<String> onlineUsers = (Set<String>)request.getAttribute("onlineUsers");
 				@SuppressWarnings("unchecked")
 				List<UserAccount> timelineActiveUsers = (List<UserAccount>)request.getAttribute("timelineActiveUsers");
 				@SuppressWarnings("unchecked")
@@ -76,7 +77,7 @@
 			<h1> Welcome to analytics. </h1>
 			<p> <b>User Count:</b> <%=users.size()%></p>
 			<p> <b>TimelineActive User Count:</b> <%=timelineActiveUsers.size()%></p>
-			<p> <b>TimelineActive And Online User Count:</b> <%=timelineActiveAndOnlineUsers.size()%></p>
+			<p> <b>Online User Count:</b> <%=onlineUsers.size()%></p>
 		
 	<% } %>
 	
