@@ -19,6 +19,7 @@ import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
+import com.chitter.external.BitlyAPI;
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;
 import com.chitter.persistence.UserStatistic;
@@ -120,7 +121,11 @@ public class BotInvitationState extends AbstractState {
 			}
 			
 			try {
-				twitter.updateStatus("I started using @"+TwitterAPI.getChitterScreenName()+". It's a bot that enables you to use Twitter from Gtalk! Get it at http://j.mp/ed0h7C!");
+				twitter.updateStatus("I started using @"+
+									 TwitterAPI.getChitterScreenName()+
+									 ". It's a bot that enables you to use Twitter from Gtalk! Get it at "+
+									 BitlyAPI.shortenUrl("http://chitter.im/?utm_source=twitter&utm_medium=auto-tweet&utm_campaign=user-"+twitter.getScreenName())+
+									 "!");
 			} catch (TwitterException e) {
 				ExceptionPrinter.print(System.err, e, "I couldn't update newly registered user's status: "+user.getEmail());
 			}
