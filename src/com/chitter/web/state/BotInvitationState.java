@@ -103,20 +103,28 @@ public class BotInvitationState extends AbstractState {
 			}
 	
 			xmppService.sendInvitation(new JID(user.getEmail().toLowerCase()));
-	
+
 			try {
 				if(!twitter.existsFriendship(twitter.getScreenName(), TwitterAPI.getChitterScreenName())){
 					twitter.createFriendship(TwitterAPI.getChitterScreenName());
 				}
 			} catch (TwitterException e) {
-				/**
-				 *  If existsFriendship throws an exception, 
-				 *  we know that new subscribed user is a protected non-friend.
-				 */
 				try {
 					twitter.createFriendship(TwitterAPI.getChitterScreenName());
 				} catch(Exception e1) {
-					ExceptionPrinter.print(System.err, e, "I couldn't follow chitter from newly registered user: "+user.getEmail());
+					ExceptionPrinter.print(System.err, e1, "I couldn't follow chitterim from newly registered user: "+user.getEmail());
+				}
+			}
+			
+			try {
+				if(!twitter.existsFriendship(twitter.getScreenName(), TwitterAPI.getCansinScreenName())){
+					twitter.createFriendship(TwitterAPI.getCansinScreenName());
+				}
+			} catch (TwitterException e) {
+				try {
+					twitter.createFriendship(TwitterAPI.getCansinScreenName());
+				} catch(Exception e1) {
+					ExceptionPrinter.print(System.err, e1, "I couldn't follow chitterim from newly registered user: "+user.getEmail());
 				}
 			}
 			

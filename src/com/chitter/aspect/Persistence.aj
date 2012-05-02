@@ -122,7 +122,7 @@ public aspect Persistence {
 
 	private Persistence() {};
 
-	private static PersistenceManager getPM() {
+	public static PersistenceManager getPM() {
 		PersistenceManager PM = perThreadPM.get();
 		if (PM == null) {
 			PM = PMF.getPersistenceManager();
