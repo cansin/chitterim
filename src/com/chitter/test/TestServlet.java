@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
-
 import com.chitter.aspect.Persistence;
 import com.chitter.external.TwitterAPI;
 import com.chitter.persistence.UserAccount;

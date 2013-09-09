@@ -1,5 +1,7 @@
 package com.chitter.web;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,15 +26,21 @@ public class LoginServlet extends HttpServlet {
 	private static final UserService userService = 
 		UserServiceFactory.getUserService();
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+	public void doGet(HttpServletRequest request, HttpServletResponse response){
 		processRequest(request,response);
 	}
-	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response){
 		processRequest(request,response);
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-		//if(request.getServerName().equals("chitterim.appspot.com")) response.sendRedirect("http://www.chitter.im");
+		if(request.getServerName().equals("chitterim.appspot.com")) {
+			try {
+				response.sendRedirect("http://www.chitter.im");
+			} catch (IOException e) {
+				// Do nothing.
+			}
+		}
 		
 		// First Step
 		if(!userService.isUserLoggedIn()) {
