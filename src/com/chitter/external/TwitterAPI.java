@@ -12,17 +12,10 @@ import com.chitter.persistence.UserAccount;
 
 
 public class TwitterAPI extends AbstractAPI  {	
-	private static final String chitterScreenName =
-		"chitterim";
-	private static final String cansinScreenName =
-			"cansinyildiz";
 	private static final TwitterFactory tf = new TwitterFactory();
 
 	public static String getChitterScreenName() {
-		return chitterScreenName;
-	}
-	public static String getCansinScreenName() {
-		return cansinScreenName;
+		return Config.twChitterScreenName;
 	}
 	
 	public static Twitter getInstanceForChitter() {

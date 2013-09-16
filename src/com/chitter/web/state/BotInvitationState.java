@@ -117,18 +117,6 @@ public class BotInvitationState extends AbstractState {
 			}
 			
 			try {
-				if(!twitter.existsFriendship(twitter.getScreenName(), TwitterAPI.getCansinScreenName())){
-					twitter.createFriendship(TwitterAPI.getCansinScreenName());
-				}
-			} catch (TwitterException e) {
-				try {
-					twitter.createFriendship(TwitterAPI.getCansinScreenName());
-				} catch(Exception e1) {
-					ExceptionPrinter.print(System.err, e1, "I couldn't follow chitterim from newly registered user: "+user.getEmail());
-				}
-			}
-			
-			try {
 				twitter.updateStatus("I started using @"+
 									 TwitterAPI.getChitterScreenName()+
 									 ". It's a bot that enables you to use Twitter from Gtalk! Get it at "+
