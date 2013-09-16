@@ -1,6 +1,6 @@
-#Chitter.im
+#[Chitter.im](http://chitter.im)
 
-Chitter.im is a Gtalk bot that allows you to communicate with Twitter very simply. Using Chitter.im bot; you can follow your timeline, send (re)tweets and direct messages, (un)follow users, see incoming friendships.
+[Chitter.im](http://chitter.im) is a Gtalk bot that allows you to communicate with Twitter very simply. Using [Chitter.im](http://chitter.im) bot; you can follow your timeline, send (re)tweets and direct messages, (un)follow users, see incoming friendships.
 
 ##Development
 
