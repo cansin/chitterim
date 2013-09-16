@@ -20,3 +20,4 @@ The web interface is a Java Servlet/JSP module to gather account information. It
   - Eclipse Java Web Developer Tools
 - Update `/com/chitter/external/Config.java` file to include your secret and consumer keys for both twitter and bit.ly. 
 - Add Twitter4J v2.2.5 library to `war/WEB-INF/lib` (Download from [here](http://twitter4j.org/archive/twitter4j-2.2.5.zip)).
+- Add AspectJRT library to `war/WEB-INF/lib` (Download from [here](http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.3.jar)).
