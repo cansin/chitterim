@@ -179,19 +179,6 @@ public aspect Persistence {
 		} 
 	}
 
-	@SuppressWarnings("all")
-	/*Extent around() : pullExtent() {
-		PersistenceManager pm = getPM();
-
-		try {
-			Extent extent = pm.getExtent(thisJoinPoint.getSignature().getDeclaringType(), false);
-			return extent;
-		} catch (Exception e) {
-			ExceptionPrinter.print(System.err, e, "I couldn't fetch persistent extent for "+getClass());
-			return null;
-		} 
-    }*/
-
 	after() : pmShouldClose() {
 		PersistenceManager PM = perThreadPM.get();
 		if (PM != null) {
