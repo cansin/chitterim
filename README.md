@@ -1,8 +1,8 @@
-#[Chitter.im](http://chitter.im)
+# [Chitter.im](http://chitter.im)
 
 [Chitter.im](http://chitter.im) is a Gtalk bot that allows you to communicate with Twitter very simply. Using [Chitter.im](http://chitter.im) bot; you can follow your timeline, send (re)tweets and direct messages, (un)follow users, see incoming friendships.
 
-##Development
+## Development
 
 Both Chitter.im bot and it's web interface is hosted at Google App Engine for Java (GAEj).
 
@@ -10,7 +10,7 @@ The bot itself uses XMPP service of GAEj to communicate with clients. Since, Twi
 
 The web interface is a Java Servlet/JSP module to gather account information. It uses OAuth for Twitter, and Users service of GAEj for Gtalk authentication. The persistence is achieved using Java Data Objects (JDO) Query Language (JDOQL).
 
-##How to Get it Work
+## How to Get it Work
 
 - Install Eclipse with below plugins:
   - [Google App Engine Java SDK](https://developers.google.com/appengine/docs/java/tools/eclipse)
